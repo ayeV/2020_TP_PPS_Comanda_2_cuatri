@@ -1,0 +1,31 @@
+img{
+    animation: vibrate 2s cubic-bezier(.36, .07, .19, .97) infinite;
+    width: 50vw;
+    height: 50vw;
+    min-width: 300px;
+    min-height: 300px;
+}
+
+@keyframes vibrate {
+    0.50%, 10%, 20%, 30%, 40%, 50%
+    {
+      -webkit-transform: translate3d(10px, 0, 0);
+      transform: translate3d(10px, 0, 0);
+    }
+    5%, 15%, 25%, 35%, 45% 
+    {
+      -webkit-transform: translate3d(-10px, 0, 0);
+      transform: translate3d(-10px, 0, 0);
+    }
+    100% {
+      -webkit-transform: translate3d(10px, 0, 0);
+      transform: translate3d(10px, 0, 0);
+    }
+  
+  }
+  .content{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
