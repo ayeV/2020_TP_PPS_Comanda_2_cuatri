@@ -55,8 +55,8 @@ export class HomePage {
     switch (usuario) {
       case 'admin':
         this.login.setValue({
-          correo: "admin@admin.com",
-          clave: "111111"
+          correo: "ayelenvaldez07@gmail.com",
+          clave: "123456"
         });
         break;
       case 'invitado':
