@@ -1,9 +1,43 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>altaEmpleado</ion-title>
+<ion-header [translucent]="true" color ="secondary">
+  <ion-toolbar color="secondary">
+    <ion-title class="ion-text-center" color="primary">
+      Alta de empleado
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="secondary" [fullscreen]="true">
+
+  <div class="ion-margin ion-padding">
+    <form>
+      
+  <ion-item>
+    <ion-label  color="primary"> Tipo de empleado</ion-label>
+    <ion-select color="primary">
+      <ion-select-option value="cocinero"  color="primary">Cocinero</ion-select-option>
+      <ion-select-option value="mozo"  color="primary">Mozo</ion-select-option>
+      <ion-select-option value="bartender"  color="primary">Bar tender</ion-select-option>
+
+    </ion-select>
+  </ion-item>
+      <ion-item color="primary">
+        <ion-input placeholder="Ingrese el nombre" type="text"></ion-input>
+      </ion-item>
+      <ion-item color="primary">
+        <ion-input placeholdeR="Ingrese el apellido" type="text" ></ion-input>
+      </ion-item>
+      <ion-item color="primary">
+        <ion-input placeholdeR="Ingrese el DNI" type="text" ></ion-input>
+      </ion-item>
+      <ion-item color="primary">
+        <ion-input placeholdeR="Ingrese el CUIL" type="text" ></ion-input>
+      </ion-item>
+      <ion-button color="primary" size="large"  expand="block" ><ion-icon name="camera-outline"></ion-icon></ion-button>
+    <ion-button color="primary" size="large"  expand="block" ><ion-icon name="qr-code-outline"></ion-icon></ion-button>
+
+    <ion-button color="primary" size="large"  expand="block" >Guardar</ion-button>
+
+    </form>
+  </div>
 
 </ion-content>
