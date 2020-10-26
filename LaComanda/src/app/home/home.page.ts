@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ActionSheetController, ToastController } from '@ionic/angular';
 import { AuthService } from '../servicios/auth.service';
 import { ErrorService } from '../servicios/error.service';
+import { LoaderService } from '../servicios/loader.service';
+import { UsuarioService } from '../servicios/usuario.service';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +22,9 @@ export class HomePage {
     public toastController: ToastController,
     public errorController: ErrorService,
     private formBuilder: FormBuilder,
-    public actionSheetController: ActionSheetController) {
+    public actionSheetController: ActionSheetController,
+    private usuarioService: UsuarioService,
+    private loaderService: LoaderService) {
       this.login = this.formBuilder.group({
         correo: ['', [Validators.required, Validators.email]],
         clave: ['', [Validators.required, Validators.minLength(6)]]
@@ -31,13 +35,17 @@ export class HomePage {
 
   logForm(){
     if(this.login.value.correo!=null && this.login.value.clave!=null){
-      console.log(this.login.value)
-      this.authService.SignIn(this.login.value.correo, this.login.value.clave)
+      this.loaderService.showLoader();
+      this.authService.login(this.login.value.correo, this.login.value.clave)
         .then((res) => {
-          this.router.navigate(['principal']);          
+          this.usuarioService.getUsuario(this.authService.userData.uid).subscribe((response)=>{
+            this.authService.setUserInfo(response.data());
+            this.loaderService.hideLoader();
+            this.router.navigate(['principal']);  
+          })
         })
         .catch((error) => {
-          console.log(error);
+          this.loaderService.hideLoader();
           this.presentToast(this.errorController.translate(error.code))
         });
     }
@@ -59,28 +67,28 @@ export class HomePage {
           clave: "123456"
         });
         break;
-      case 'invitado':
+      case 'dueño':
         this.login.setValue({
-          correo: "invitado@invitado.com",
-          clave: "222222"
+          correo: "duenio@mail.com",
+          clave: "123456"
         });
         break;
-      case 'usuario':
+      case 'supervisor':
         this.login.setValue({
-          correo: "usuario@usuario.com",
-          clave: "333333"
+          correo: "supervisor@mail.com",
+          clave: "123456"
         });
         break;
-      case 'anonimo':
+      case 'cliente':
         this.login.setValue({
-          correo: "anonimo@anonimo.com",
-          clave: "444444"
+          correo: "cliente@mail.com",
+          clave: "123456"
         });
         break;
-      case 'tester':
+      case 'empleado':
         this.login.setValue({
-          correo: "tester@tester.com",
-          clave: "555555"
+          correo: "empleado@mail.com",
+          clave: "123456"
         });
         break;
       default:

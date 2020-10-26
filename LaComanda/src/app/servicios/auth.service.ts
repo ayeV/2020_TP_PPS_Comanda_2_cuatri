@@ -10,6 +10,7 @@ import { User } from '../clases/user';
 })
 export class AuthService {
   userData: any;
+  private info;
 
   constructor(
     public afStore: AngularFirestore,
@@ -30,8 +31,9 @@ export class AuthService {
   }
 
   // Login in with email/password
-  SignIn(email, password) {
-    return this.ngFireAuth.signInWithEmailAndPassword(email, password)
+  async login(email, password) {
+    var result = await this.ngFireAuth.signInWithEmailAndPassword(email, password)
+    localStorage.setItem('user', JSON.stringify(result.user));
   }
 
   // Register user with email/password
@@ -85,6 +87,18 @@ export class AuthService {
     }).catch((error) => {
       window.alert(error)
     })
+  }
+
+  infoUsuario(){
+    return this.info;
+  }
+
+  setUserInfo(info){
+    this.info = info;
+  }
+
+  getUserRole(){
+    return this.info.role;
   }
 
   // Store user in localStorage
