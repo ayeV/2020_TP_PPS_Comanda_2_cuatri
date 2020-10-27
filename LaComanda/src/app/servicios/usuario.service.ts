@@ -29,8 +29,8 @@ export class UsuarioService {
 
 
 
-  postUsuario(uid, user: Usuario) {
-    return this.db.collection("usuarios").doc(uid).set({
+  postUsuario(user: Usuario) {
+    return this.db.collection("usuarios").doc(user.uid).set({
       nombre: user.nombre,
       apellido: user.apellido,
       dni: user.dni,
@@ -39,7 +39,7 @@ export class UsuarioService {
       perfil: user.perfil,
       estado: user.estado,
       tipo:user.tipo,
-      uid:uid
+      uid:user.uid
 
     });
 

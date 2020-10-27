@@ -1,5 +1,6 @@
 export class Usuario {
 
+    public uid;
     public nombre: string;
     public apellido: string;
     public foto: string;
@@ -9,7 +10,8 @@ export class Usuario {
     public estado: string;
     public tipo: string;
 
-    constructor(nombre, apellido, foto, dni, cuil, perfil, estado, tipo = null) {
+    constructor(uid, nombre, apellido, foto, dni, cuil, perfil, estado, tipo = null) {
+        this.uid = uid;
         this.nombre = nombre;
         this.apellido = apellido;
         this.foto = foto;

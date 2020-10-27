@@ -60,9 +60,9 @@ export class AltaEmpleadoPage implements OnInit {
   guardar() {
     this.loaderService.showLoader();
 
-    let usuario = new Usuario(this.altaEmpleado.value.nombre, this.altaEmpleado.value.apellido, this.foto, this.altaEmpleado.value.dni, this.altaEmpleado.value.cuil, 'empleado', 'aceptado', this.altaEmpleado.value.tipo);
     this.authService.RegisterUser(this.altaEmpleado.value.email, this.altaEmpleado.value.clave).then((res) => {
-      this.usuarioService.postUsuario(res.user.uid, usuario).then(() => {
+      let usuario = new Usuario(res.user.uid, this.altaEmpleado.value.nombre, this.altaEmpleado.value.apellido, this.foto, this.altaEmpleado.value.dni, this.altaEmpleado.value.cuil, 'empleado', 'aceptado', this.altaEmpleado.value.tipo);
+      this.usuarioService.postUsuario(usuario).then(() => {
         this.loaderService.hideLoader();
         this.presentToast("Empleado registrado correctamente.");
       }).catch(() => {

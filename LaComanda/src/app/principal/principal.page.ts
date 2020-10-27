@@ -15,7 +15,7 @@ export class PrincipalPage implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    console.log(this.authService.infoUsuario().perfil)
+    console.log(this.authService.infoUsuario())
     this.perfil = this.authService.infoUsuario().perfil;
   }
 
