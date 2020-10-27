@@ -16,4 +16,6 @@ export class PrincipalPage implements OnInit {
     this.perfil = this.authService.infoUsuario().perfil;
   }
 
+  
+
 }
