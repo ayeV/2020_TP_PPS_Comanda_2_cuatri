@@ -73,9 +73,9 @@ export class HomePage {
           clave: "123456"
         });
         break;
-      case 'supervisor':
+      case 'cocinero':
         this.login.setValue({
-          correo: "supervisor@mail.com",
+          correo: "cocinero1@gmail.com",
           clave: "123456"
         });
         break;
@@ -91,6 +91,12 @@ export class HomePage {
           clave: "123456"
         });
         break;
+        case 'mozo':
+          this.login.setValue({
+            correo: "mozo1@gmail.com",
+            clave: "123456"
+          });
+          break;
       default:
         break;
     }

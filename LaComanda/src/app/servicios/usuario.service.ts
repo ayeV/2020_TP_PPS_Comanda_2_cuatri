@@ -38,6 +38,7 @@ export class UsuarioService {
       foto: null,
       perfil: user.perfil,
       estado: user.estado,
+      tipo:user.tipo,
       uid:uid
 
     });
