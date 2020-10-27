@@ -38,14 +38,15 @@
       <ion-item color="primary">
         <ion-input placeholdeR="Ingrese el CUIL" type="text"  formControlName="cuil"></ion-input>
       </ion-item>
-      <ion-button color="primary" size="large" expand="block">
+      <ion-button color="primary" size="large" expand="block" (click)="takePicture()">
         <ion-icon name="camera-outline"></ion-icon>
       </ion-button>
-      <ion-button color="primary" size="large" expand="block">
+      <ion-button color="primary" size="large" expand="block" (click)="scan()">
         <ion-icon name="qr-code-outline"></ion-icon>
       </ion-button>
 
-      <ion-button color="primary" size="large" expand="block"  type="submit">Guardar</ion-button>
+      <ion-button [disabled]="!altaEmpleado.valid" color="primary" size="large" expand="block"  type="submit">Guardar</ion-button>
+      <img *ngIf="foto" [src]="foto">
 
     </form>
   </div>
