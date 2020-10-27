@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../servicios/auth.service';
 
 @Component({
@@ -9,13 +10,17 @@ import { AuthService } from '../servicios/auth.service';
 export class PrincipalPage implements OnInit {
   public perfil;
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit() {
     console.log(this.authService.infoUsuario().perfil)
     this.perfil = this.authService.infoUsuario().perfil;
   }
 
-  
+  irA(ruta){
+    this.router.navigate([ruta]);
+  }
 
 }

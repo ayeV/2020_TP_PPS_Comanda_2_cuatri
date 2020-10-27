@@ -12,14 +12,11 @@
   <ion-menu side="start" contentId="main">
     <ion-content>
       <ion-list>
-        <ion-item>
-          Alta 1
+        <ion-item (click)="irA('alta-supervisor')">
+          <ion-label>Dar de alta empleado</ion-label>
         </ion-item>
-        <ion-item>
-          Alta 2
-        </ion-item>
-        <ion-item>
-          Alta 3
+        <ion-item (click)="irA('alta-empleado')">
+          <ion-label>Dar de alta supervisor</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
