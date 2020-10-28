@@ -24,7 +24,7 @@ export class UsuarioService {
   }
 
   getUsuarios() {
-    return this.db.collection('usuarios');
+    return this.db.collection('usuarios').get();
   }
 
 

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -26,6 +26,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFirestoreModule,],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     StatusBar,
     SplashScreen,

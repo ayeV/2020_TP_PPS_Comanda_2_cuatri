@@ -16,6 +16,7 @@ export class HomePage {
 
   private login: FormGroup;
 
+
   constructor(
     public authService: AuthService,
     public router: Router,
@@ -32,6 +33,8 @@ export class HomePage {
     }
   ngOnInit(): void {
   }
+
+
 
   logForm(){
     if(this.login.value.correo!=null && this.login.value.clave!=null){
