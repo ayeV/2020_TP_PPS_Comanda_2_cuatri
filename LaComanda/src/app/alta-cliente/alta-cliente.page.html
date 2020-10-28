@@ -1,0 +1,48 @@
+<ion-header [translucent]="true" color="secondary">
+  <ion-toolbar color="secondary">
+    <ion-title class="ion-text-center" color="primary">
+      Alta de cliente
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="secondary" [fullscreen]="true">
+
+  <div class="ion-margin ion-padding">\
+    <ion-item>
+      <ion-label>Anónimo</ion-label>
+      <ion-checkbox color="primary" [(ngModel)]="esAnonimo"></ion-checkbox>
+    </ion-item>
+    <form [formGroup]="altaCliente" (ngSubmit)="guardar()">
+      <ion-item color="primary">
+        <ion-input placeholder="Ingrese el email" type="text"  formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item color="primary">
+        <ion-input placeholder="Ingrese la clave" type="password"  formControlName="clave"></ion-input>
+      </ion-item>
+      <ion-item color="primary">
+        <ion-input placeholder="Ingrese el nombre" type="text"  formControlName="nombre"></ion-input>
+      </ion-item>
+      <ion-item color="primary" *ngIf="!esAnonimo">
+        <ion-input placeholdeR="Ingrese el apellido" type="text"  formControlName="apellido"></ion-input>
+      </ion-item>
+      <ion-item color="primary" *ngIf="!esAnonimo">
+        <ion-input placeholdeR="Ingrese el DNI" type="text"  formControlName="dni"></ion-input>
+      </ion-item>
+      <ion-item color="primary" *ngIf="!esAnonimo">
+        <ion-input placeholdeR="Ingrese el CUIL" type="text"  formControlName="cuil"></ion-input>
+      </ion-item>
+      <ion-button color="primary" size="large" expand="block" (click)="takePicture()">
+        <ion-icon name="camera-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="primary" size="large" expand="block" (click)="scan()" *ngIf="!esAnonimo">
+        <ion-icon name="qr-code-outline"></ion-icon>
+      </ion-button>
+
+      <ion-button [disabled]="!altaCliente.valid" color="primary" size="large" expand="block"  type="submit">Guardar</ion-button>
+      <img *ngIf="foto" [src]="foto">
+
+    </form>
+  </div>
+
+</ion-content>
