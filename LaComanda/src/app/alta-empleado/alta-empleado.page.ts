@@ -5,6 +5,7 @@ import { Camera, CameraResultType } from '@capacitor/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ToastController } from '@ionic/angular';
 import { CuilValidator } from '../clases/cuil-validator';
+import { DniQR } from '../clases/dni-qr';
 import { Usuario } from '../clases/usuario';
 import { AuthService } from '../servicios/auth.service';
 import { LoaderService } from '../servicios/loader.service';
@@ -94,6 +95,8 @@ export class AltaEmpleadoPage implements OnInit {
 
           },
             (error) => {
+              this.loaderService.hideLoader();
+              this.presentToast("Hubo un error.");
 
             },
             () => {
@@ -129,11 +132,11 @@ export class AltaEmpleadoPage implements OnInit {
     this.data = null;
     this.barcodeScanner.scan({ formats: "PDF_417" }).then(barcodeData => {
       console.log('Barcode data', barcodeData);
-      let string = barcodeData['text'].split("@");
+      let info = DniQR.decodeQR(barcodeData['text']);
       this.altaEmpleado.setValue({
-        apellido: string[2],
-        nombre: string[1],
-        dni: string[4],
+        apellido: info.apellido,
+        nombre: info.nombre,
+        dni: info.dni,
         correo: this.altaEmpleado.value.email,
         clave: this.altaEmpleado.value.clave,
         cuil: this.altaEmpleado.value.cuil,

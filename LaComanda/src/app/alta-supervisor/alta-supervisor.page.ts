@@ -9,6 +9,7 @@ import { LoaderService } from '../servicios/loader.service';
 import { UsuarioService } from '../servicios/usuario.service';
 import { Plugins, CameraResultType } from '@capacitor/core';
 import { Router } from '@angular/router';
+import { DniQR } from '../clases/dni-qr';
 const { Camera } = Plugins;
 
 @Component({
@@ -73,12 +74,11 @@ export class AltaSupervisorPage implements OnInit {
   scan(){
     this.data = null;
     this.barcodeScanner.scan({formats: "PDF_417"}).then(barcodeData => {
-      console.log('Barcode data', barcodeData);
-      let string = barcodeData['text'].split("@");
+      let info = DniQR.decodeQR(barcodeData['text']);
       this.altaSupervisor.setValue({
-        apellido: string[2],
-        nombre: string[1],
-        dni: string[4],
+        apellido: info.apellido,
+        nombre: info.nombre,
+        dni: info.dni,
         correo: this.altaSupervisor.value.correo,
         clave: this.altaSupervisor.value.clave,
         cuil: this.altaSupervisor.value.cuil
@@ -114,7 +114,8 @@ export class AltaSupervisorPage implements OnInit {
 
           },
           (error)=>{
-
+            this.loaderService.hideLoader();
+            this.presentToast("Ha ocurrido un error, vuelve a intentarlo mas tarde.");
           },
           ()=>{
             this.usuarioService.uploadTask.snapshot.ref.getDownloadURL().then((downloadUrl)=>{
@@ -132,8 +133,8 @@ export class AltaSupervisorPage implements OnInit {
           this.presentToast("Usuario dado de alta correctamente.");
         }
       }).catch(() => {
+        this.loaderService.hideLoader();
         this.presentToast("Ha ocurrido un error, vuelve a intentarlo mas tarde.");
-  
       })
     })
   }
