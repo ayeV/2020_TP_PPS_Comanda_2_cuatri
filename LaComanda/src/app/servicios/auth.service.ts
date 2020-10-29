@@ -34,6 +34,7 @@ export class AuthService {
   async login(email, password) {
     var result = await this.ngFireAuth.signInWithEmailAndPassword(email, password)
     localStorage.setItem('user', JSON.stringify(result.user));
+    this.userData = result.user;
   }
 
   // Register user with email/password

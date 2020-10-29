@@ -26,30 +26,35 @@ export class HomePage {
     public actionSheetController: ActionSheetController,
     private usuarioService: UsuarioService,
     private loaderService: LoaderService) {
-      this.login = this.formBuilder.group({
-        correo: ['', [Validators.required, Validators.email]],
-        clave: ['', [Validators.required, Validators.minLength(6)]]
-      });
-    }
+    this.login = this.formBuilder.group({
+      correo: ['', [Validators.required, Validators.email]],
+      clave: ['', [Validators.required, Validators.minLength(6)]]
+    });
+  }
   ngOnInit(): void {
   }
 
+  ionViewWillEnter(){
+    this.login.setValue({
+      correo: '',
+      clave: ''
+    })
+  }
 
-
-  logForm(){
-    if(this.login.value.correo!=null && this.login.value.clave!=null){
+  logForm() {
+    if (this.login.value.correo != null && this.login.value.clave != null) {
       this.loaderService.showLoader();
       this.authService.login(this.login.value.correo, this.login.value.clave)
         .then((res) => {
-          this.usuarioService.getUsuario(this.authService.userData.uid).subscribe((response)=>{
+          this.usuarioService.getUsuario(this.authService.userData.uid).subscribe((response) => {
             this.authService.setUserInfo(response.data());
             this.loaderService.hideLoader();
-            this.router.navigate(['principal']);  
+            this.router.navigate(['principal']);
           })
         })
         .catch((error) => {
           this.loaderService.hideLoader();
-          this.presentToast(this.errorController.translate(error.code))
+          this.presentToast(error)
         });
     }
   }
@@ -62,7 +67,7 @@ export class HomePage {
     toast.present();
   }
 
-  llenarUsuario(usuario){
+  llenarUsuario(usuario) {
     switch (usuario) {
       case 'admin':
         this.login.setValue({
@@ -94,12 +99,12 @@ export class HomePage {
           clave: "123456"
         });
         break;
-        case 'mozo':
-          this.login.setValue({
-            correo: "mozo1@gmail.com",
-            clave: "123456"
-          });
-          break;
+      case 'mozo':
+        this.login.setValue({
+          correo: "mozo1@gmail.com",
+          clave: "123456"
+        });
+        break;
       default:
         break;
     }

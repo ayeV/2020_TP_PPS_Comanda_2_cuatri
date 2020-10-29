@@ -24,6 +24,9 @@
         <ion-item (click)="salir()">
           <ion-label>Salir</ion-label>
         </ion-item>
+        <ion-item (click)="prueba()">
+          <ion-label>Prueba</ion-label>
+        </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
@@ -45,6 +48,6 @@
     </ion-card>
   </div>
   <div  id="main"  *ngIf="info.perfil !='cliente'">
-
+    <ion-button (click)="prueba()">Prueba</ion-button>
   </div>
 </ion-content>

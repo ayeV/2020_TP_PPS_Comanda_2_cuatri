@@ -14,6 +14,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    AngularFirestoreModule,],
+    AngularFirestoreModule,
+    HttpClientModule],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     StatusBar,
