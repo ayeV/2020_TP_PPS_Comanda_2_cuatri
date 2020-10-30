@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'alta-cliente',
     loadChildren: () => import('./alta-cliente/alta-cliente.module').then( m => m.AltaClientePageModule)
   },
+  {
+    path: 'admin-usuarios',
+    loadChildren: () => import('./admin-usuarios/admin-usuarios.module').then( m => m.AdminUsuariosPageModule)
+  },
 ];
 
 @NgModule({

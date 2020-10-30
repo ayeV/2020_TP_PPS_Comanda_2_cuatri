@@ -13,6 +13,7 @@ import {
   PushNotificationActionPerformed,
   Capacitor
 } from '@capacitor/core';
+import { PedidosService } from '../servicios/pedidos.service';
 
 const { PushNotifications } = Plugins;
 const { FCMPlugin } = Plugins;
@@ -26,6 +27,8 @@ export class PrincipalPage implements OnInit {
   public info;
   public platos = [];
   public loggedUser: any;
+  public cantidad= 0;
+  public platosPedidos = [];
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -33,7 +36,8 @@ export class PrincipalPage implements OnInit {
     private loaderService: LoaderService,
     private usuarioService: UsuarioService,
     public fcmService: FcmService,
-    public toastController: ToastController) { }
+    public toastController: ToastController,
+    public pedidosService: PedidosService) { }
 
   async presentToast(message) {
     const toast = await this.toastController.create({
@@ -99,12 +103,29 @@ export class PrincipalPage implements OnInit {
           descripcion: item.data().descripcion,
           importe: item.data().importe,
           fotos: item.data().fotos,
-          id: item.id
+          id: item.id,
+          tipo: item.data().tipo
         });
       });
       this.platos = platos;
       this.loaderService.hideLoader();
     });
   }
+
+  agregar(plato)
+  {
+    this.cantidad++;
+    this.platosPedidos.push(plato);
+    
+  }
+
+  quitar(plato)
+  {
+    if(this.cantidad > 0)
+    {
+      this.cantidad --;
+
+    }
+  } 
 
 }

@@ -44,10 +44,17 @@
           Precio: ${{item.importe}}
         </ion-label>
       </ion-card-header>
-
+      <ion-button (click)="agregar(item)">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+      {{cantidad}}
+      <ion-button (click)="quitar(item)">
+        <ion-icon name="remove-circle-outline"></ion-icon>
+      </ion-button>
     </ion-card>
   </div>
   <div  id="main"  *ngIf="info.perfil !='cliente'">
     <ion-button (click)="prueba()">Prueba</ion-button>
+   
   </div>
 </ion-content>
