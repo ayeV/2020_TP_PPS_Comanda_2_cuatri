@@ -47,10 +47,6 @@ export class PrincipalPage implements OnInit {
     toast.present();
   }
 
-  prueba(){
-    this.fcmService.sendNotification("mensaje de prueba");
-  }
-
   ngOnInit() {
     this.info = this.authService.infoUsuario();
     this.getPlatos();
@@ -65,21 +61,18 @@ export class PrincipalPage implements OnInit {
     PushNotifications.addListener('registration', (token: PushNotificationToken) => {
       alert('push notification token: ' + token.value);
       this.fcmService.guardarToken(token.value).then(() => {
-        this.presentToast('token guardado')
       })
     })
 
     PushNotifications.addListener('registrationError',
       (error: any) => {
-        alert('error: ' + JSON.stringify(error));
       })
 
     PushNotifications.addListener('pushNotificationReceived', (notification: PushNotification) => {
-      this.presentToast(JSON.stringify(notification));
+      this.presentToast(JSON.stringify(notification.body));
     })
 
     PushNotifications.addListener('pushNotificationActionPerformed', (notification: PushNotificationActionPerformed) => {
-      alert('accion' + JSON.stringify(notification));
     })
   }
 
