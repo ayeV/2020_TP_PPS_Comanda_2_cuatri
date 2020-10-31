@@ -59,6 +59,10 @@ export class HomePage {
     }
   }
 
+  irARegistro(){
+    this.router.navigate(['alta-cliente']);
+  }
+
   async presentToast(messageText: string) {
     const toast = await this.toastController.create({
       message: messageText,

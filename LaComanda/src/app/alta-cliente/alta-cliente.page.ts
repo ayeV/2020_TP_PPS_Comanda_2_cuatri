@@ -8,6 +8,7 @@ import { CuilValidator } from '../clases/cuil-validator';
 import { DniQR } from '../clases/dni-qr';
 import { Usuario } from '../clases/usuario';
 import { AuthService } from '../servicios/auth.service';
+import { FcmService } from '../servicios/fcm.service';
 import { LoaderService } from '../servicios/loader.service';
 import { UsuarioService } from '../servicios/usuario.service';
 
@@ -29,7 +30,8 @@ export class AltaClientePage implements OnInit {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private barcodeScanner: BarcodeScanner,
-    private router: Router) {
+    private router: Router,
+    private FCMService: FcmService) {
     this.altaCliente = this.formBuilder.group({
       apellido: ['', [Validators.required, Validators.maxLength(15)]],
       nombre: ['', [Validators.required, Validators.maxLength(15)]],
@@ -98,9 +100,11 @@ export class AltaClientePage implements OnInit {
             () => {
               this.usuarioService.uploadTask.snapshot.ref.getDownloadURL().then((downloadUrl) => {
                 this.usuarioService.updateUserPic(usuario.uid, downloadUrl).then(() => {
-                  this.loaderService.hideLoader();
-                  this.router.navigate(['principal']);
-                  this.presentToast("Usuario dado de alta correctamente.");
+                  this.FCMService.sendNotificationNewCustomer().subscribe((response)=>{
+                    this.loaderService.hideLoader();
+                    this.router.navigate(['principal']);
+                    this.presentToast("Usuario dado de alta correctamente.");
+                  });
                 })
               })
             })

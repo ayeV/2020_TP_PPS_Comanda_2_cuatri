@@ -43,4 +43,16 @@ export class FcmService {
       console.log(response);
     });
   }
+
+  sendNotificationNewCustomer(){
+    let header = {"Authorization": `key=${this.key}`};
+    console.log(header);
+    return this.http.post(this.url, {
+      "notification": {
+        title: "Mensaje",
+        body: 'Se ha registrado un nuevo usuario'
+      },
+      "to": "/topics/registro"
+    },{headers: header})
+  }
 }

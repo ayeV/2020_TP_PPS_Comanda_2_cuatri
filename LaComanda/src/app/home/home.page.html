@@ -37,7 +37,8 @@
         <ion-input placeholdeR="Ingrese su clave" type="password" formControlName="clave"></ion-input>
       </ion-item>
     <ion-button color="primary" size="large" type="submit" expand="block" [disabled]="!login.valid">Ingresar</ion-button>
-    </form>
+    <ion-button (click)="irARegistro()" color="tertiary" size="large"expand="block">Nuevo Cliente</ion-button>  
+  </form>
   </div>
   <img class="servir" src="assets/images/servir.png" style="height: 200px; width: 200px; margin-left: 25vw;">
 
