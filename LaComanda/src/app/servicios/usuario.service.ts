@@ -45,6 +45,30 @@ export class UsuarioService {
 
   }
 
+  postCustomer(user: Usuario, esAnonimo){
+    if(esAnonimo){
+      return this.db.collection('usuarios').doc(user.uid).set({
+        nombre: user.nombre,
+        foto: null,
+        perfil: user.perfil,
+        estado: user.estado,
+        uid: user.uid,
+        esAnonimo: esAnonimo
+      });
+    }else{
+      return this.db.collection('usuarios').doc(user.uid).set({
+        nombre: user.nombre,
+        apellido: user.apellido,
+        foto: null,
+        dni: user.dni,
+        perfil: user.perfil,
+        estado: user.estado,
+        uid: user.uid,
+        esAnonimo: esAnonimo
+      });
+    }
+  }
+
   updateUserPic(id,url) {
     return this.db.collection('usuarios').doc(id).set({
       foto: url,

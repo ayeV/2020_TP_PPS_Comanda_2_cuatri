@@ -16,8 +16,8 @@
 
 <ion-content color="secondary" [fullscreen]="true">
 
-  <div class="ion-margin ion-padding">\
-    <ion-item>
+  <div class="ion-margin ion-padding">
+    <ion-item (click)="anonimoCheck()">
       <ion-label>Anónimo</ion-label>
       <ion-checkbox color="primary" [(ngModel)]="esAnonimo"></ion-checkbox>
     </ion-item>
@@ -36,9 +36,6 @@
       </ion-item>
       <ion-item color="primary" *ngIf="!esAnonimo">
         <ion-input placeholdeR="Ingrese el DNI" type="text"  formControlName="dni"></ion-input>
-      </ion-item>
-      <ion-item color="primary" *ngIf="!esAnonimo">
-        <ion-input placeholdeR="Ingrese el CUIL" type="text"  formControlName="cuil"></ion-input>
       </ion-item>
       <ion-button color="primary" size="large" expand="block" (click)="takePicture()">
         <ion-icon name="camera-outline"></ion-icon>

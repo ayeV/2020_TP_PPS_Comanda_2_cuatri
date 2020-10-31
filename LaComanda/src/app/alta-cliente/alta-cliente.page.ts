@@ -35,12 +35,9 @@ export class AltaClientePage implements OnInit {
     this.altaCliente = this.formBuilder.group({
       apellido: ['', [Validators.required, Validators.maxLength(15)]],
       nombre: ['', [Validators.required, Validators.maxLength(15)]],
-      cuil: ['', [Validators.required, CuilValidator.cuilValido]],
       dni: ['', [Validators.required, Validators.maxLength(8)]],
       clave: ['', [Validators.required, Validators.minLength(6)]],
-      email: ['', [Validators.required, Validators.email]],
-      tipo: ['', [Validators.required]]
-
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
@@ -88,8 +85,8 @@ export class AltaClientePage implements OnInit {
     this.loaderService.showLoader();
 
     this.authService.RegisterUser(this.altaCliente.value.email, this.altaCliente.value.clave).then((res) => {
-      let usuario = new Usuario(res.user.uid, this.altaCliente.value.nombre, this.altaCliente.value.apellido, this.foto, this.altaCliente.value.dni, this.altaCliente.value.cuil, 'cliente', 'pendiente', this.altaCliente.value.tipo);
-      this.usuarioService.postUsuario(usuario).then(() => {
+      let usuario = new Usuario(res.user.uid, this.altaCliente.value.nombre, this.altaCliente.value.apellido, this.foto, this.altaCliente.value.dni, null, 'cliente', 'pendiente', null);
+      this.usuarioService.postCustomer(usuario, this.esAnonimo).then(() => {
         if (this.foto) {
           this.usuarioService.uploadFile(this.foto).on('state_changed', (snapshot) => {
 
@@ -140,12 +137,32 @@ export class AltaClientePage implements OnInit {
         correo: this.altaCliente.value.email,
         clave: this.altaCliente.value.clave,
         cuil: this.altaCliente.value.cuil,
-        tipo: this.altaCliente.value.tipo,
       });
 
     }).catch(err => {
       console.log('Error', err);
     });
+  }
+
+  anonimoCheck(){
+    if(this.esAnonimo){
+      this.altaCliente.setValue({
+        apellido: 'completo',
+        nombre: this.altaCliente.value.nombre,
+        dni: 'completo',
+        clave: this.altaCliente.value.clave,
+        email: this.altaCliente.value.email
+      })
+    }
+    else{
+      this.altaCliente.setValue({
+        apellido: '',
+        nombre: this.altaCliente.value.nombre,
+        dni: '',
+        clave: this.altaCliente.value.clave,
+        email: this.altaCliente.value.email
+      })
+    }
   }
 
 }
