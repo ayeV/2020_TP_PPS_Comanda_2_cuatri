@@ -31,6 +31,14 @@ const routes: Routes = [
     path: 'admin-usuarios',
     loadChildren: () => import('./admin-usuarios/admin-usuarios.module').then( m => m.AdminUsuariosPageModule)
   },
+  {
+    path: 'alta-pedido',
+    loadChildren: () => import('./alta-pedido/alta-pedido.module').then( m => m.AltaPedidoPageModule)
+  },
+  {
+    path: 'confirmar-pedido',
+    loadChildren: () => import('./confirmar-pedido/confirmar-pedido.module').then( m => m.ConfirmarPedidoPageModule)
+  },
 ];
 
 @NgModule({

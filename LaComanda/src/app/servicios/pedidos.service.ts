@@ -5,5 +5,16 @@ import { Injectable } from '@angular/core';
 })
 export class PedidosService {
 
+  public platosPedidos = [];
+  public importeTotal = 0;
   constructor() { }
+
+
+  calcularImportes()
+  {
+    this.platosPedidos.forEach((c)=>{
+      c.importe = c.importe * c.cantidad;
+    });
+  }
+
 }

@@ -27,8 +27,9 @@ export class PrincipalPage implements OnInit {
   public info;
   public platos = [];
   public loggedUser: any;
-  public cantidad= 0;
+  public cantidad = 0;
   public platosPedidos = [];
+  public importeTotal = 0;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -49,17 +50,15 @@ export class PrincipalPage implements OnInit {
 
   ngOnInit() {
     this.info = this.authService.infoUsuario();
-    this.getPlatos();
     PushNotifications.requestPermission().then(result => {
       if (result.granted) {
-        PushNotifications.register().then(response=>{
-          FCMPlugin.subscribeTo({topic: 'registro'});
+        PushNotifications.register().then(response => {
+          FCMPlugin.subscribeTo({ topic: 'registro' });
         });
       }
     });
 
     PushNotifications.addListener('registration', (token: PushNotificationToken) => {
-      alert('push notification token: ' + token.value);
       this.fcmService.guardarToken(token.value).then(() => {
       })
     })
@@ -86,39 +85,5 @@ export class PrincipalPage implements OnInit {
     });
   }
 
-  getPlatos() {
-    this.loaderService.showLoader();
-    let platos = [];
-    this.menuService.getPlatos().subscribe(x => {
-      x.forEach(item => {
-        platos.push({
-          nombre: item.data().nombre,
-          descripcion: item.data().descripcion,
-          importe: item.data().importe,
-          fotos: item.data().fotos,
-          id: item.id,
-          tipo: item.data().tipo
-        });
-      });
-      this.platos = platos;
-      this.loaderService.hideLoader();
-    });
-  }
-
-  agregar(plato)
-  {
-    this.cantidad++;
-    this.platosPedidos.push(plato);
-    
-  }
-
-  quitar(plato)
-  {
-    if(this.cantidad > 0)
-    {
-      this.cantidad --;
-
-    }
-  } 
 
 }

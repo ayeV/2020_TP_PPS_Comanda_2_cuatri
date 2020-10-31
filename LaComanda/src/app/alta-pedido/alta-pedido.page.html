@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title color="primary">Menú</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="main" *ngIf="platos">
+    <ion-card *ngFor="let item of platos" color="primary">
+      <ion-card-header>
+        <ion-card-title>{{item.nombre}}</ion-card-title>
+        <ion-slides>
+          <ion-slide *ngFor="let img of item.fotos">
+            <img [src]="img" class="imagen" />
+          </ion-slide>
+        </ion-slides>
+        <ion-card-subtitle>{{item.descripcion}}</ion-card-subtitle>
+        <ion-label>
+          Precio: ${{item.importe}}
+        </ion-label>
+      </ion-card-header>
+      <ion-button (click)="quitar(item)">
+        <ion-icon name="remove-circle-outline"></ion-icon>
+      </ion-button>
+      <label> {{item.cantidad}} </label>
+      <ion-button (click)="agregar(item)">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Importe total: ${{importeTotal}}</ion-title>
+  </ion-toolbar>
+</ion-footer>
+<ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab-button color="primary" (click)="hacerPedido()">
+    <ion-icon name="checkmark-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>

@@ -10,7 +10,7 @@
 </ion-header>
 <ion-content>
   <ion-menu side="start" contentId="main">
-    <ion-content >
+    <ion-content>
       <ion-list>
         <ion-item (click)="irA('alta-supervisor')" *ngIf="info.perfil=='supervisor'">
           <ion-label>Dar de alta supervisor</ion-label>
@@ -24,33 +24,10 @@
         <ion-item (click)="salir()">
           <ion-label>Salir</ion-label>
         </ion-item>
-        <ion-item (click)="prueba()">
-          <ion-label>Prueba</ion-label>
-        </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
-  <div id="main" *ngIf="info.perfil =='cliente' && platos">
-    <ion-card *ngFor="let item of platos" color="primary">
-      <ion-card-header>
-        <ion-card-title>{{item.nombre}}</ion-card-title>
-        <ion-slides>
-          <ion-slide *ngFor="let img of item.fotos">
-            <img [src]="img" class="imagen"/>
-          </ion-slide>
-        </ion-slides>
-        <ion-card-subtitle>{{item.descripcion}}</ion-card-subtitle>
-        <ion-label>
-          Precio: ${{item.importe}}
-        </ion-label>
-      </ion-card-header>
-      <ion-button (click)="agregar(item)">
-        <ion-icon name="add-circle-outline"></ion-icon>
-      </ion-button>
-      {{cantidad}}
-      <ion-button (click)="quitar(item)">
-        <ion-icon name="remove-circle-outline"></ion-icon>
-      </ion-button>
-    </ion-card>
-  </div>
+  <div id="main" *ngIf="info.perfil =='supervisor'"></div>
+  <ion-button *ngIf="info.perfil == 'cliente'" color="primary" expand="block" [routerLink]="['/alta-pedido']" routerLinkActive="router-link-active" >Ver menú</ion-button>
+
 </ion-content>
