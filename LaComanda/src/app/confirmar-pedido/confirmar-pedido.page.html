@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Información de tu pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let item of pedido">
+      <ion-label> {{item.cantidad}}x {{item.nombre}}</ion-label>
+      <ion-label>${{item.importe}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>Importe total: ${{importeTotal}}</ion-title>
+  </ion-toolbar>
+</ion-footer>
+<ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <ion-fab-button color="primary" (click)="confirmar()">
+    <ion-icon name="checkmark-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
