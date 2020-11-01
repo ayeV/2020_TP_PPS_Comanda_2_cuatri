@@ -24,3 +24,42 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.custom-loader {
+	--background: transparent;
+	ion-backdrop {
+		background-color: #fff;
+		opacity: .9 !important;
+	}
+	.loading-wrapper {
+        animation: rotation 2s infinite linear;
+		-webkit-animation: rotation 2s infinite linear;
+
+		background-image:  url("/assets/images/comanda.gif");
+		background-size: contain;
+		background-position: center center;
+		background-repeat: no-repeat;
+		min-width: 90px;
+		min-height: 90px;
+		box-shadow: none;
+		-webkit-box-shadow: none;
+	}
+}
+
+@keyframes rotation {
+    from {
+            -webkit-transform: rotate(0deg);
+    }
+    to {
+            -webkit-transform: rotate(359deg);
+    }
+}
+
+@-webkit-keyframes rotation {
+    from {
+            -webkit-transform: rotate(0deg);
+    }
+    to {
+            -webkit-transform: rotate(359deg);
+    }
+}

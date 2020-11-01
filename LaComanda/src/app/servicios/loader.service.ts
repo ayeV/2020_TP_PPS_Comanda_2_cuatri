@@ -11,7 +11,9 @@ export class LoaderService {
   showLoader() {
 
     this.loadingController.create({
-      message: 'Por favor espere...'
+      cssClass: 'custom-loader',
+      animated: true,
+      spinner: null,
     }).then((res) => {
       res.present();
     });
