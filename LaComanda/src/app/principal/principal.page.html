@@ -28,6 +28,41 @@
     </ion-content>
   </ion-menu>
   <div id="main" *ngIf="info.perfil =='supervisor'"></div>
-  <ion-button *ngIf="info.perfil == 'cliente'" color="primary" expand="block" [routerLink]="['/alta-pedido']" routerLinkActive="router-link-active" >Ver menú</ion-button>
+  <div id="main" *ngIf="info.perfil == 'cliente'">
+    <div *ngIf="!estaEnLista">.
+      <ion-item>
+        <ion-icon name="information-circle"></ion-icon>
+        <ion-label class="ion-text-wrap">
+          Por favor, escanee el código QR para poder ingresar a la lista de espera.
+        </ion-label>
+      </ion-item>
+      <ion-button (click)="scanEspera()"  color="primary" expand="block" >
+        <ion-icon slot="start" name="qr-code-outline"></ion-icon>
+        Ingresar a lista de espera
+      </ion-button>
+    </div>
+    <div *ngIf="estaEnLista && estadoLista == 'espera'">
+      <ion-item>
+        <ion-icon name="information-circle"></ion-icon>
+        <ion-label class="ion-text-wrap">
+          Espere las indicaciones del Metre para ser asignado a la mesa. Cuando se le indique escanee el código QR.
+        </ion-label>
+      </ion-item>
+      <ion-button (click)="scanMesa()"  color="primary" expand="block" >
+        <ion-icon slot="start" name="qr-code-outline"></ion-icon>
+        Leer Código QR Mesa
+      </ion-button>
+    </div>
+    <div *ngIf="estaEnLista && estadoLista == 'conMesa'">
+      <ion-button color="primary" [routerLink]="['/alta-pedido']" routerLinkActive="router-link-active" color="primary" expand="block" >
+        Realizar pedido
+      </ion-button>
+      <ion-button (click)="scanMesa()"  color="primary" expand="block" >
+        <ion-icon slot="start" name="qr-code-outline"></ion-icon>
+        Leer Código QR Mesa
+      </ion-button>
+    </div>
+
+  </div>
 
 </ion-content>

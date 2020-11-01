@@ -49,10 +49,22 @@ export class FcmService {
     console.log(header);
     return this.http.post(this.url, {
       "notification": {
-        title: "Mensaje",
+        title: "Registro",
         body: 'Se ha registrado un nuevo usuario'
       },
       "to": "/topics/registro"
+    },{headers: header})
+  }
+
+  sendNotificationWaitList(){
+    let header = {"Authorization": `key=${this.key}`};
+    console.log(header);
+    return this.http.post(this.url, {
+      "notification": {
+        title: "Lista de espera",
+        body: 'Hay un nuevo cliente esperando'
+      },
+      "to": "/topics/listaEspera"
     },{headers: header})
   }
 }

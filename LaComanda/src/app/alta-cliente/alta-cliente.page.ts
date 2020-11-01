@@ -99,7 +99,12 @@ export class AltaClientePage implements OnInit {
                 this.usuarioService.updateUserPic(usuario.uid, downloadUrl).then(() => {
                   this.FCMService.sendNotificationNewCustomer().subscribe((response)=>{
                     this.loaderService.hideLoader();
-                    this.router.navigate(['principal']);
+                    if(this.loggedUser){
+                      this.router.navigate(['principal']);
+                    }
+                    else{
+                      this.router.navigate(['login']);
+                    }
                     this.presentToast("Usuario dado de alta correctamente.");
                   });
                 })
@@ -107,9 +112,16 @@ export class AltaClientePage implements OnInit {
             })
         }
         else {
-          this.loaderService.hideLoader();
-          this.router.navigate(['principal']);
-          this.presentToast("Usuario dado de alta correctamente.");
+          this.FCMService.sendNotificationNewCustomer().subscribe((response)=>{
+            this.loaderService.hideLoader();
+            if(this.loggedUser){
+              this.router.navigate(['principal']);
+            }
+            else{
+              this.router.navigate(['login']);
+            }
+            this.presentToast("Usuario dado de alta correctamente.");
+          })
         }
       }).catch(() => {
         this.loaderService.hideLoader();
