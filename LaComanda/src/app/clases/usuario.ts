@@ -9,8 +9,9 @@ export class Usuario {
     public perfil: string;
     public estado: string;
     public tipo: string;
+    public email:string;
 
-    constructor(uid, nombre, apellido, foto, dni, cuil, perfil, estado, tipo = null) {
+    constructor(uid, nombre, apellido, foto, dni, cuil, perfil, estado, tipo = null,email=null) {
         this.uid = uid;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -20,6 +21,7 @@ export class Usuario {
         this.perfil = perfil;
         this.estado = estado;
         this.tipo = tipo;
+        this.email = email;
 
     }
 

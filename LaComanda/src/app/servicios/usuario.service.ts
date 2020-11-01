@@ -53,7 +53,8 @@ export class UsuarioService {
         perfil: user.perfil,
         estado: user.estado,
         uid: user.uid,
-        esAnonimo: esAnonimo
+        esAnonimo: esAnonimo,
+        email:user.email
       });
     }else{
       return this.db.collection('usuarios').doc(user.uid).set({
@@ -64,7 +65,8 @@ export class UsuarioService {
         perfil: user.perfil,
         estado: user.estado,
         uid: user.uid,
-        esAnonimo: esAnonimo
+        esAnonimo: esAnonimo,
+        email:user.email
       });
     }
   }
@@ -83,5 +85,13 @@ export class UsuarioService {
      this.uploadTask = ref.putString(dataUrl, 'data_url');
      return this.uploadTask;
   }
+
+  
+  updateEstado(id,estado) {
+    return this.db.collection('usuarios').doc(id).set({
+      estado: estado,
+    },{merge: true});
+  }
+
 
 }

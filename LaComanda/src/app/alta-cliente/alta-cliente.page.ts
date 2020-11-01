@@ -85,7 +85,7 @@ export class AltaClientePage implements OnInit {
     this.loaderService.showLoader();
 
     this.authService.RegisterUser(this.altaCliente.value.email, this.altaCliente.value.clave).then((res) => {
-      let usuario = new Usuario(res.user.uid, this.altaCliente.value.nombre, this.altaCliente.value.apellido, this.foto, this.altaCliente.value.dni, null, 'cliente', 'pendiente', null);
+      let usuario = new Usuario(res.user.uid, this.altaCliente.value.nombre, this.altaCliente.value.apellido, this.foto, this.altaCliente.value.dni, null, 'cliente', 'pendiente', null,res.user.email);
       this.usuarioService.postCustomer(usuario, this.esAnonimo).then(() => {
         if (this.foto) {
           this.usuarioService.uploadFile(this.foto).on('state_changed', (snapshot) => {
@@ -99,6 +99,7 @@ export class AltaClientePage implements OnInit {
                 this.usuarioService.updateUserPic(usuario.uid, downloadUrl).then(() => {
                   this.FCMService.sendNotificationNewCustomer().subscribe((response)=>{
                     this.loaderService.hideLoader();
+                    debugger;
                     if(this.loggedUser){
                       this.router.navigate(['principal']);
                     }
