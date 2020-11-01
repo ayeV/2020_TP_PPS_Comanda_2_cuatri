@@ -34,7 +34,7 @@ export class HomePage {
   ngOnInit(): void {
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.login.setValue({
       correo: '',
       clave: ''
@@ -47,10 +47,16 @@ export class HomePage {
       this.authService.login(this.login.value.correo, this.login.value.clave)
         .then((res) => {
           this.usuarioService.getUsuario(this.authService.userData.uid).subscribe((response) => {
-            this.authService.setUserInfo(response.data());
-            this.loaderService.hideLoader();
-            this.router.navigate(['principal']);
-          })
+            if (response.data().perfil == 'cliente' && response.data().estado != 'aceptado') {
+              this.loaderService.hideLoader();
+              this.presentToast("Debes ser aceptado por el supervisor para poder iniciar sesión.");
+            }
+            else {
+              this.authService.setUserInfo(response.data());
+              this.loaderService.hideLoader();
+              this.router.navigate(['principal']);
+            }
+          });
         })
         .catch((error) => {
           this.loaderService.hideLoader();
@@ -59,7 +65,7 @@ export class HomePage {
     }
   }
 
-  irARegistro(){
+  irARegistro() {
     this.router.navigate(['alta-cliente']);
   }
 
