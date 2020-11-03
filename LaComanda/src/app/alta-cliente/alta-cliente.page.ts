@@ -99,7 +99,6 @@ export class AltaClientePage implements OnInit {
                 this.usuarioService.updateUserPic(usuario.uid, downloadUrl).then(() => {
                   this.FCMService.sendNotificationNewCustomer().subscribe((response)=>{
                     this.loaderService.hideLoader();
-                    debugger;
                     if(this.loggedUser){
                       this.router.navigate(['principal']);
                     }

@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Envia tu consulta</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button [routerLink]="['/principal']" color="secondary">
+        <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-margin ion-padding">
+    <form [formGroup]="altaConsulta" (ngSubmit)="enviarConsulta()">
+      <ion-item color="primary">
+        <ion-textarea autocapitalize="true" maxlength=50 placeholder="Ingrese su consulta" type="text" formControlName="consulta"></ion-textarea>
+      </ion-item>
+      <ion-button [disabled]="!altaConsulta.valid" color="primary" size="large" expand="block" type="submit" (click)="enviar()">Enviar
+      </ion-button>
+    </form>
+  </div>
+  <img src="./../../assets/images/camarero.png">
+
+</ion-content>

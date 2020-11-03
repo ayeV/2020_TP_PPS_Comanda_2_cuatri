@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'confirmar-pedido',
     loadChildren: () => import('./confirmar-pedido/confirmar-pedido.module').then( m => m.ConfirmarPedidoPageModule)
   },
+  {
+    path: 'consulta',
+    loadChildren: () => import('./consulta/consulta.module').then( m => m.ConsultaPageModule)
+  },
 ];
 
 @NgModule({

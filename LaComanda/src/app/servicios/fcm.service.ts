@@ -67,4 +67,16 @@ export class FcmService {
       "to": "/topics/listaEspera"
     },{headers: header})
   }
+
+  sendNotificationConsultas(mensaje:string, mesa:string){
+    let header = {"Authorization": `key=${this.key}`};
+    console.log(header);
+    return this.http.post(this.url, {
+      "notification": {
+        title: mesa,
+        body: mensaje
+      },
+      "to": "/topics/consulta"
+    },{headers: header})
+  }
 }

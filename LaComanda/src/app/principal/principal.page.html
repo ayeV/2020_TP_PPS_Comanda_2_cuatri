@@ -31,6 +31,7 @@
     </ion-content>
   </ion-menu>
   <div id="main" *ngIf="info.perfil =='supervisor'"></div>
+  <div id="main" *ngIf="info.perfil =='mozo'"></div>
   <div id="main" *ngIf="info.perfil == 'cliente'">
     <div *ngIf="!estaEnLista">.
       <ion-item>
@@ -63,6 +64,10 @@
       <ion-button (click)="scanMesa()"  color="primary" expand="block" >
         <ion-icon slot="start" name="qr-code-outline"></ion-icon>
         Leer Código QR Mesa
+      </ion-button>
+      <ion-button [routerLink]="['/consulta']" routerLinkActive="router-link-active"   color="primary" expand="block" >
+        <ion-icon  slot="start" name="hand-left-outline"></ion-icon>
+        Consulta al mozo
       </ion-button>
     </div>
 

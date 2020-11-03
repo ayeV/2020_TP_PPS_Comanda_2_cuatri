@@ -1,6 +1,6 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title color="primary">Menú</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title color="secondary">Menú</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -36,7 +36,7 @@
   </ion-toolbar>
 </ion-footer>
 <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-  <ion-fab-button color="primary" (click)="hacerPedido()">
+  <ion-fab-button [disabled]="importeTotal==0" color="primary" (click)="hacerPedido()">
     <ion-icon name="checkmark-outline"></ion-icon>
   </ion-fab-button>
 </ion-fab>

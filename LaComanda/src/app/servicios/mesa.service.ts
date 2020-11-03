@@ -13,6 +13,11 @@ export class MesaService {
     return this.db.collection('mesas').doc(idMesa).get();
   }
 
+  getMesas()
+  {
+    return this.db.collection("mesas").get();
+  }
+
   tomarMesa(idMesa, uid){
     return this.db.collection('mesas').doc(idMesa).update({
       estado: 'ocupada',

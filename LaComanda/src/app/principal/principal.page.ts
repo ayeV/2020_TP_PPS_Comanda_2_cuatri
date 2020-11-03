@@ -80,6 +80,10 @@ export class PrincipalPage implements OnInit {
           if(this.info.perfil == 'supervisor'){
             FCMPlugin.subscribeTo({ topic: 'registro' });
           }
+          if(this.info.perfil == 'empleado' && this.info.tipo == 'mozo')
+          {
+            FCMPlugin.subscribeTo({ topic: 'consulta' });
+          }
         });
       }
     });
