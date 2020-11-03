@@ -17,6 +17,7 @@ import { PedidosService } from '../servicios/pedidos.service';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ListaEsperaService } from '../servicios/lista-espera.service';
 import { MesaService } from '../servicios/mesa.service';
+import { FCM } from '@capacitor-community/fcm';
 
 const { PushNotifications } = Plugins;
 const { FCMPlugin } = Plugins;
@@ -111,6 +112,8 @@ export class PrincipalPage implements OnInit {
 
   salir() {
     this.authService.SignOut().then(() => {
+      FCMPlugin.unsubscribeFrom({ topic: 'registro'});
+      FCMPlugin.unsubscribeFrom({ topic: 'consulta'});
       this.router.navigate(['home']);
     });
   }
