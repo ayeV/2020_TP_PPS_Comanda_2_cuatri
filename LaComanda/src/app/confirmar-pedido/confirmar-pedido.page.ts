@@ -50,8 +50,27 @@ export class ConfirmarPedidoPage implements OnInit {
         apellido:this.usuario.apellido,
         uid:this.authService.userData.uid
       }
+      let pedido = {
+        estado:'pendiente',
+        bebidas: {
+          platos:this.pedido.filter((x)=>{
+            return x.tipo == 'bebida';
+          }),
+          estado:'pendiente'
+        },
+        comidas:{
+          platos:this.pedido.filter((x)=>{
+            return x.tipo == 'comida';
+          }),
+          estado:'pendiente'
+        },
+        cliente:usuario,
+        importeTotal: this.importeTotal,
+        mesa:this.mesa[0]
+
+      }
       console.log(this.mesa);
-       this.pedidosService.guardarPedido(usuario, this.pedido, this.importeTotal, "pendiente",this.mesa[0]).then((res) => {
+       this.pedidosService.guardarPedido(pedido).then((res) => {
         this.loaderService.hideLoader();
         this.presentToast("Su pedido ha sido enviado.")
         this.router.navigate(['principal']);

@@ -19,16 +19,28 @@ export class PedidosService {
     });
   }
 
-  guardarPedido(usuario:any,platos:any,importe:number,estado:string,mesa:any)
+  guardarPedido(pedido:any)
   {
     return this.db.collection("pedidos").add({
-      estado: estado,
-      platos:platos,
-      cliente:usuario,
-      importeTotal:importe,
-      mesa:mesa
+      estado: pedido.estado,
+      comidas:pedido.comidas,
+      bebidas:pedido.bebidas,
+      importeTotal:pedido.importeTotal,
+      mesa:pedido.mesa,
+      cliente:pedido.cliente
     });
 
+  }
+
+  getPedidos()
+  {
+    return this.db.collection('pedidos').get();
+  }
+
+  updateEstado(id,estado) {
+    return this.db.collection('pedidos').doc(id).set({
+      estado: estado,
+    },{merge: true});
   }
 
 }

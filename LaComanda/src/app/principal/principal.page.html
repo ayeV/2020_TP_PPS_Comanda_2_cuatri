@@ -21,6 +21,9 @@
         <ion-item (click)="irA('alta-cliente')" *ngIf="info.tipo == 'mozo'">
           <ion-label>Dar de alta cliente</ion-label>
         </ion-item>
+        <ion-item (click)="irA('admin-pedidos-mozo')" *ngIf="info.tipo == 'mozo'">
+          <ion-label>Confirmar pedidos</ion-label>
+        </ion-item>
         <ion-item (click)="irA('admin-usuarios')" *ngIf="info.perfil == 'supervisor'">
           <ion-label>Administrar clientes</ion-label>
         </ion-item>

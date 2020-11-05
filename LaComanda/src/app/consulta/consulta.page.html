@@ -11,7 +11,7 @@
   <div class="ion-margin ion-padding">
     <form [formGroup]="altaConsulta" (ngSubmit)="enviarConsulta()">
       <ion-item color="primary">
-        <ion-textarea autocapitalize="true" maxlength=50 placeholder="Ingrese su consulta" type="text" formControlName="consulta"></ion-textarea>
+        <ion-textarea class="consulta" autocapitalize="true" maxlength=50 placeholder="Ingrese su consulta" type="text" formControlName="consulta"></ion-textarea>
       </ion-item>
       <ion-button [disabled]="!altaConsulta.valid" color="primary" size="large" expand="block" type="submit" (click)="enviar()">Enviar
       </ion-button>

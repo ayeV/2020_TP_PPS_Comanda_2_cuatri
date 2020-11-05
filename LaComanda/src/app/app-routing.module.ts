@@ -43,6 +43,14 @@ const routes: Routes = [
     path: 'consulta',
     loadChildren: () => import('./consulta/consulta.module').then( m => m.ConsultaPageModule)
   },
+  {
+    path: 'admin-pedidos-mozo',
+    loadChildren: () => import('./admin-pedidos-mozo/admin-pedidos-mozo.module').then( m => m.AdminPedidosMozoPageModule)
+  },
+  {
+    path: 'modal-pedido',
+    loadChildren: () => import('./modal-pedido/modal-pedido.module').then( m => m.ModalPedidoPageModule)
+  },
 ];
 
 @NgModule({
