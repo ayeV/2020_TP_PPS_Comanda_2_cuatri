@@ -101,7 +101,7 @@ export class AltaClientePage implements OnInit {
                 this.usuarioService.updateUserPic(usuario.uid, downloadUrl).then(() => {
                   this.FCMService.sendNotificationNewCustomer().subscribe((response)=>{
                     this.loaderService.hideLoader();
-                    if(this.loggedUser && this.authService.userData){
+                    if(this.loggedUser && this.authService.userData && this.authService.infoUsuario() && this.authService.infoUsuario().perfil == 'supervisor'){
                       this.router.navigate(['principal']);
                     }
                     else{
@@ -116,7 +116,7 @@ export class AltaClientePage implements OnInit {
         else {
           this.FCMService.sendNotificationNewCustomer().subscribe((response)=>{
             this.loaderService.hideLoader();
-            if(this.loggedUser && this.authService.userData){
+            if(this.loggedUser && this.authService.userData && this.authService.infoUsuario() && this.authService.infoUsuario().perfil == 'supervisor'){
               this.router.navigate(['principal']);
             }
             else{
