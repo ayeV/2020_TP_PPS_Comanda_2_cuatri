@@ -20,7 +20,8 @@ export class ListaEsperaService {
   agregarALista(uid){
     return this.db.collection('listaEspera').doc(uid).set({
       uid: uid,
-      estado: 'espera'
+      estado: 'espera',
+      fecha: new Date(Date.now())
     });
   }
 

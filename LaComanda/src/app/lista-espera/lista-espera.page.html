@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Lista de espera</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let espera of listaEspera; let i = index">
+      <ion-label class="capitalize">{{i+1}} - Nombre: {{espera.nombre}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

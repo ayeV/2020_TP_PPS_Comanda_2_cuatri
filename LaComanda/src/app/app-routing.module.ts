@@ -50,7 +50,11 @@ const routes: Routes = [
   {
     path: 'modal-pedido',
     loadChildren: () => import('./modal-pedido/modal-pedido.module').then( m => m.ModalPedidoPageModule)
+  },  {
+    path: 'lista-espera',
+    loadChildren: () => import('./lista-espera/lista-espera.module').then( m => m.ListaEsperaPageModule)
   },
+
 ];
 
 @NgModule({

@@ -35,7 +35,11 @@
   </ion-menu>
   <div id="main" *ngIf="info.perfil =='supervisor'"></div>
   <div id="main" *ngIf="info.perfil =='empleado' && info.tipo == 'mozo'"></div>
-  <div id="main" *ngIf="info.perfil =='empleado' && info.tipo == 'metre'"></div>
+  <div id="main" *ngIf="info.perfil =='empleado' && info.tipo == 'metre'">
+    <ion-button color="primary" [routerLink]="['/lista-espera']" routerLinkActive="router-link-active" color="primary" expand="block" >
+      Ver lista de espera
+    </ion-button>
+  </div>
   <div id="main" *ngIf="info.perfil == 'cliente'">
     <div *ngIf="!estaEnLista">.
       <ion-item>
