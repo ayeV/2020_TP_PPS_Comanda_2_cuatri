@@ -43,11 +43,11 @@ export class ConfirmarPedidoPage implements OnInit {
 
   confirmar() {
     this.loaderService.showLoader();
-
+debugger;
     if (this.pedido != null && this.importeTotal > 0) {
       let usuario ={
         nombre:this.usuario.nombre,
-        apellido:this.usuario.apellido,
+        apellido:this.usuario.apellido ? this.usuario.apellido: '',
         uid:this.authService.userData.uid
       }
       let pedido = {
@@ -80,6 +80,7 @@ export class ConfirmarPedidoPage implements OnInit {
       });
     }
     else {
+      this.loaderService.hideLoader();
       this.presentToast("Ha ocurrido un error vuelva a intentarlo mas tarde.")
     }
   }
