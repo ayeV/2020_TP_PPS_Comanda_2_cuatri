@@ -137,7 +137,7 @@ export class AltaEmpleadoPage implements OnInit {
         apellido: info.apellido,
         nombre: info.nombre,
         dni: info.dni,
-        correo: this.altaEmpleado.value.email,
+        email: this.altaEmpleado.value.email,
         clave: this.altaEmpleado.value.clave,
         cuil: this.altaEmpleado.value.cuil,
         tipo: this.altaEmpleado.value.tipo

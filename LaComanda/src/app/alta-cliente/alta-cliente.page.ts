@@ -148,7 +148,7 @@ export class AltaClientePage implements OnInit {
         apellido: info.apellido,
         nombre: info.nombre,
         dni: info.dni,
-        correo: this.altaCliente.value.email,
+        email: this.altaCliente.value.email,
         clave: this.altaCliente.value.clave,
         cuil: this.altaCliente.value.cuil,
       });
