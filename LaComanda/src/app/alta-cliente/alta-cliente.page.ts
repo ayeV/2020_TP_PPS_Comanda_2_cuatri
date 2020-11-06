@@ -116,7 +116,7 @@ export class AltaClientePage implements OnInit {
         else {
           this.FCMService.sendNotificationNewCustomer().subscribe((response)=>{
             this.loaderService.hideLoader();
-            if(this.loggedUser){
+            if(this.loggedUser && this.authService.userData){
               this.router.navigate(['principal']);
             }
             else{
