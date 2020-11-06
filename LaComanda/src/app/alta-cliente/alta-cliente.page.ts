@@ -101,11 +101,11 @@ export class AltaClientePage implements OnInit {
                 this.usuarioService.updateUserPic(usuario.uid, downloadUrl).then(() => {
                   this.FCMService.sendNotificationNewCustomer().subscribe((response)=>{
                     this.loaderService.hideLoader();
-                    if(this.loggedUser){
+                    if(this.loggedUser && this.authService.userData){
                       this.router.navigate(['principal']);
                     }
                     else{
-                      this.router.navigate(['login']);
+                      this.router.navigate(['home']);
                     }
                     this.presentToast("Usuario dado de alta correctamente.");
                   });
