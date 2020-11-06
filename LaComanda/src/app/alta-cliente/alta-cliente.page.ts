@@ -120,7 +120,7 @@ export class AltaClientePage implements OnInit {
               this.router.navigate(['principal']);
             }
             else{
-              this.router.navigate(['login']);
+              this.router.navigate(['home']);
             }
             this.presentToast("Usuario dado de alta correctamente.");
           })
