@@ -35,6 +35,7 @@
   </ion-menu>
   <div id="main" *ngIf="info.perfil =='supervisor'"></div>
   <div id="main" *ngIf="info.perfil =='empleado' && info.tipo == 'mozo'"></div>
+  <div id="main" *ngIf="info.perfil =='empleado' && info.tipo == 'metre'"></div>
   <div id="main" *ngIf="info.perfil == 'cliente'">
     <div *ngIf="!estaEnLista">.
       <ion-item>

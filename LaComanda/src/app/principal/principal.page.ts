@@ -85,6 +85,10 @@ export class PrincipalPage implements OnInit {
           {
             FCMPlugin.subscribeTo({ topic: 'consulta' });
           }
+          if(this.info.perfil == 'empleado' && this.info.tipo == 'metre')
+          {
+            FCMPlugin.subscribeTo({ topic: 'listaEspera' });
+          }
         });
       }
     });
@@ -114,6 +118,7 @@ export class PrincipalPage implements OnInit {
     this.authService.SignOut().then(() => {
       FCMPlugin.unsubscribeFrom({ topic: 'registro'});
       FCMPlugin.unsubscribeFrom({ topic: 'consulta'});
+      FCMPlugin.unsubscribeFrom({ topic: 'listaEspera'});
       this.router.navigate(['home']);
     });
   }
@@ -198,6 +203,7 @@ export class PrincipalPage implements OnInit {
       let codigo = JSON.parse(barcodeData['text']);
       if(codigo && codigo.tipo && codigo.tipo == 'listaEspera'){
         this.listaEsperaService.agregarALista(this.authService.userData.uid).then((response)=>{
+          this.fcmService.sendNotificationWaitList();
           this.presentToast("Agregado a la lista de espera. Por favor espere las indicaciones.");
           this.estaEnLista = true;
           this.estadoLista = 'espera';

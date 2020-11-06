@@ -54,15 +54,17 @@ export class AltaClientePage implements OnInit {
   }
 
   getLoggedUser() {
-    this.loaderService.showLoader();
     let user;
-    this.usuarioService.getUsuario(this.authService.userData.uid).subscribe((res) => {
-      user = res.data();
-      this.estaCargando = false;
-      this.loggedUser = user;
-      this.loggedUser['uid'] = this.authService.userData.uid;
-      this.loaderService.hideLoader();
-    });
+    if(this.authService.userData &&  this.authService.userData.uid){
+      this.loaderService.showLoader();
+      this.usuarioService.getUsuario(this.authService.userData.uid).subscribe((res) => {
+        user = res.data();
+        this.estaCargando = false;
+        this.loggedUser = user;
+        this.loggedUser['uid'] = this.authService.userData.uid;
+        this.loaderService.hideLoader();
+      });
+    }
   }
 
   async takePicture() {

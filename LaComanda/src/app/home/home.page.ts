@@ -115,6 +115,11 @@ export class HomePage {
           clave: "123456"
         });
         break;
+      case 'metre':
+        this.login.setValue({
+          correo: "metre@mail.com",
+          clave: "123456"
+        })
       default:
         break;
     }
