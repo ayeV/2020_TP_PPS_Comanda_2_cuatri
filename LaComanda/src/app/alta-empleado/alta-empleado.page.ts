@@ -32,10 +32,10 @@ export class AltaEmpleadoPage implements OnInit {
     private barcodeScanner: BarcodeScanner,
     private router: Router) {
     this.altaEmpleado = this.formBuilder.group({
-      apellido: ['', [Validators.required, Validators.maxLength(15)]],
-      nombre: ['', [Validators.required, Validators.maxLength(15)]],
+      apellido: ['', [Validators.required, Validators.maxLength(50)]],
+      nombre: ['', [Validators.required, Validators.maxLength(50)]],
       cuil: ['', [Validators.required, CuilValidator.cuilValido]],
-      dni: ['', [Validators.required, Validators.maxLength(8)]],
+      dni: ['', [Validators.required, Validators.maxLength(10)]],
       clave: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]],
       tipo: ['', [Validators.required]]

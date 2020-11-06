@@ -33,9 +33,9 @@ export class AltaClientePage implements OnInit {
     private router: Router,
     private FCMService: FcmService) {
     this.altaCliente = this.formBuilder.group({
-      apellido: ['', [Validators.required, Validators.maxLength(15)]],
-      nombre: ['', [Validators.required, Validators.maxLength(15)]],
-      dni: ['', [Validators.required, Validators.maxLength(8)]],
+      apellido: ['', [Validators.required, Validators.maxLength(50)]],
+      nombre: ['', [Validators.required, Validators.maxLength(50)]],
+      dni: ['', [Validators.required, Validators.maxLength(10)]],
       clave: ['', [Validators.required, Validators.minLength(6)]],
       email: ['', [Validators.required, Validators.email]]
     });
