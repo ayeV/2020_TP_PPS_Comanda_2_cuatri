@@ -61,16 +61,16 @@ export class PrincipalPage implements OnInit {
 
   ngOnInit() {
     this.info = this.authService.infoUsuario();
-    if(this.info.perfil == 'cliente'){
-      this.listaEsperaService.obtenerPersonaEnLista(this.authService.userData.uid).subscribe((response)=>{
-        if(response.data()){
+    if (this.info.perfil == 'cliente') {
+      this.listaEsperaService.obtenerPersonaEnLista(this.authService.userData.uid).subscribe((response) => {
+        if (response.data()) {
           this.estaEnLista = true;
           this.estadoLista = response.data().estado;
-          if(this.estadoLista == 'conMesa'){
+          if (this.estadoLista == 'conMesa') {
             this.mesa = response.data().mesa;
             this.mesaService.idMesa = response.data().mesa;
           }
-        }else{
+        } else {
           this.estaEnLista = false;
         }
       })
@@ -78,16 +78,20 @@ export class PrincipalPage implements OnInit {
     PushNotifications.requestPermission().then(result => {
       if (result.granted) {
         PushNotifications.register().then(response => {
-          if(this.info.perfil == 'supervisor'){
+          if (this.info.perfil == 'supervisor') {
             FCMPlugin.subscribeTo({ topic: 'registro' });
           }
-          if(this.info.perfil == 'empleado' && this.info.tipo == 'mozo')
-          {
+          if (this.info.perfil == 'empleado' && this.info.tipo == 'mozo') {
             FCMPlugin.subscribeTo({ topic: 'consulta' });
           }
-          if(this.info.perfil == 'empleado' && this.info.tipo == 'metre')
-          {
+          if (this.info.perfil == 'empleado' && this.info.tipo == 'metre') {
             FCMPlugin.subscribeTo({ topic: 'listaEspera' });
+          }
+          if (this.info.perfil == 'empleado' && this.info.tipo == 'cocinero') {
+            FCMPlugin.subscribeTo({ topic: 'cocina'});
+          }
+          if(this.info.perfil == 'empleado' && this.info.tipo == 'bartender'){
+            FCMPlugin.subscribeTo({ topic: 'bar'});
           }
         });
       }
@@ -116,9 +120,11 @@ export class PrincipalPage implements OnInit {
 
   salir() {
     this.authService.SignOut().then(() => {
-      FCMPlugin.unsubscribeFrom({ topic: 'registro'});
-      FCMPlugin.unsubscribeFrom({ topic: 'consulta'});
-      FCMPlugin.unsubscribeFrom({ topic: 'listaEspera'});
+      FCMPlugin.unsubscribeFrom({ topic: 'registro' });
+      FCMPlugin.unsubscribeFrom({ topic: 'consulta' });
+      FCMPlugin.unsubscribeFrom({ topic: 'listaEspera' });
+      FCMPlugin.unsubscribeFrom({ topic: 'cocina' });
+      FCMPlugin.unsubscribeFrom({ topic: 'bar' });
       this.router.navigate(['home']);
     });
   }
@@ -128,21 +134,21 @@ export class PrincipalPage implements OnInit {
       console.log('Barcode data', barcodeData['text']);
       let codigo = JSON.parse(barcodeData['text']);
       console.log(codigo);
-      if(codigo && codigo.tipo && codigo.tipo == 'idMesa' && codigo.datos && codigo.datos.id){
+      if (codigo && codigo.tipo && codigo.tipo == 'idMesa' && codigo.datos && codigo.datos.id) {
         let idMesa = codigo.datos.id;
-        this.mesaService.obtenerMesa(idMesa).subscribe((response)=>{
-          if(response.data()){
-            if(response.data().estado == 'ocupada'){
-              if(response.data().cliente == this.authService.userData.uid){
+        this.mesaService.obtenerMesa(idMesa).subscribe((response) => {
+          if (response.data()) {
+            if (response.data().estado == 'ocupada') {
+              if (response.data().cliente == this.authService.userData.uid) {
                 this.presentActionSheetAccionesMesa(idMesa);
-              }else{
+              } else {
                 this.presentToast('La mesa se encuentra ocupada');
               }
             }
-            else{
-              if(this.estadoLista == 'conMesa'){
+            else {
+              if (this.estadoLista == 'conMesa') {
                 this.presentToast('No puede solicitar otra mesa.')
-              }else{
+              } else {
                 this.presentActionSheetSolicitarMesa(idMesa);
               }
             }
@@ -150,26 +156,26 @@ export class PrincipalPage implements OnInit {
           }
         })
       }
-      else{
+      else {
         this.presentToast("Código incorrecto. Por favor lea un código QR de una mesa");
       }
-      
+
     }).catch(err => {
       this.presentToast("Hubo un error");
     });
   }
 
-  async presentActionSheetAccionesMesa(mesa){
+  async presentActionSheetAccionesMesa(mesa) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Acciones',
       buttons: [{
         text: 'Ver estado del pedido',
-        handler: () =>{
+        handler: () => {
 
         }
-      },{
+      }, {
         text: 'Consulta al mozo',
-        handler: () =>{
+        handler: () => {
 
         }
       }]
@@ -177,15 +183,15 @@ export class PrincipalPage implements OnInit {
     await actionSheet.present();
   }
 
-  async presentActionSheetSolicitarMesa(mesa){
+  async presentActionSheetSolicitarMesa(mesa) {
     const actionSheet = await this.actionSheetController.create({
       header: 'Acciones',
       buttons: [{
         text: 'Tomar Mesa',
         handler: () => {
           this.loaderService.showLoader();
-          this.listaEsperaService.pasarAConMesa(this.authService.userData.uid, mesa).then((response)=>{
-            this.mesaService.tomarMesa(mesa, this.authService.userData.uid).then((response)=>{
+          this.listaEsperaService.pasarAConMesa(this.authService.userData.uid, mesa).then((response) => {
+            this.mesaService.tomarMesa(mesa, this.authService.userData.uid).then((response) => {
               this.mesa = mesa;
               this.estadoLista = 'conMesa'
               this.loaderService.hideLoader();
@@ -201,18 +207,18 @@ export class PrincipalPage implements OnInit {
     this.barcodeScanner.scan({ formats: "TEXT", resultDisplayDuration: 0 }).then(barcodeData => {
       console.log('Barcode data', barcodeData);
       let codigo = JSON.parse(barcodeData['text']);
-      if(codigo && codigo.tipo && codigo.tipo == 'listaEspera'){
-        this.listaEsperaService.agregarALista(this.authService.userData.uid).then((response)=>{
+      if (codigo && codigo.tipo && codigo.tipo == 'listaEspera') {
+        this.listaEsperaService.agregarALista(this.authService.userData.uid).then((response) => {
           this.fcmService.sendNotificationWaitList();
           this.presentToast("Agregado a la lista de espera. Por favor espere las indicaciones.");
           this.estaEnLista = true;
           this.estadoLista = 'espera';
         })
       }
-      else{
+      else {
         this.presentToast("Código incorrecto. Por favor lea un código QR de lista de espera");
       }
-      
+
     }).catch(err => {
       console.log('Error', err);
     });

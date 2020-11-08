@@ -70,13 +70,34 @@ export class FcmService {
 
   sendNotificationConsultas(mensaje:string, mesa:string){
     let header = {"Authorization": `key=${this.key}`};
-    console.log(header);
     return this.http.post(this.url, {
       "notification": {
         title: mesa,
         body: mensaje
       },
       "to": "/topics/consulta"
+    },{headers: header})
+  }
+
+  sendNotificationCocina(mesa: string){
+    let header = {"Authorization": `key=${this.key}`};
+    return this.http.post(this.url, {
+      "notification": {
+        title: mesa,
+        body: `Ha recibido un pedido para la mesa ${mesa}`
+      },
+      "to": "/topics/cocina"
+    },{headers: header})
+  }
+
+  sendNotificationBar(mesa: string){
+    let header = {"Authorization": `key=${this.key}`};
+    return this.http.post(this.url, {
+      "notification": {
+        title: mesa,
+        body: `Ha recibido un pedido para la mesa ${mesa}`
+      },
+      "to": "/topics/bar"
     },{headers: header})
   }
 }
