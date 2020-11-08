@@ -89,7 +89,7 @@
       </ion-button>
     </div>
     <div *ngIf="estaEnLista && estadoLista == 'conMesa'">
-      <ion-button *ngIf="pedido == null" color="primary" [routerLink]="['/alta-pedido']"
+      <ion-button *ngIf="pedido.length==0" color="primary" [routerLink]="['/alta-pedido']"
         routerLinkActive="router-link-active" color="primary" expand="block">
         Realizar pedido
       </ion-button>
@@ -101,7 +101,7 @@
         <ion-icon slot="start" name="hand-left-outline"></ion-icon>
         Consulta al mozo
       </ion-button>
-      <ion-button *ngIf="pedido && pedido[0].estado == 'listo'" color="primary" expand="block" (click)="confirmarRecepcion()">
+      <ion-button *ngIf="pedido.length!=0 && pedido[0].estado == 'listo'" color="primary" expand="block" (click)="confirmarRecepcion()">
         <ion-icon slot="start" name="hand-left-outline"></ion-icon>
         Confirmar recepción del pedido
       </ion-button>

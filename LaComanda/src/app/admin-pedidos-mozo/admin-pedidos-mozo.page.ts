@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { ModalPedidoPage } from '../modal-pedido/modal-pedido.page';
+import { FcmService } from '../servicios/fcm.service';
 import { LoaderService } from '../servicios/loader.service';
 import { PedidosService } from '../servicios/pedidos.service';
 import { UsuarioService } from '../servicios/usuario.service';
@@ -19,7 +20,8 @@ export class AdminPedidosMozoPage implements OnInit {
     private loaderService: LoaderService,
     public toastController: ToastController,
     private pedidosService:PedidosService,
-    public modalController: ModalController) { }
+    public modalController: ModalController,
+    private fcmService: FcmService) { }
 
   ngOnInit() {
     this.getPedidos();
@@ -64,7 +66,7 @@ export class AdminPedidosMozoPage implements OnInit {
         });
       });
       this.pedidosPendientes = pedidos.filter((p)=>{
-        return p.estadp == 'pendiente';
+        return p.estado == 'pendiente';
       });
       this.pedidosPagados = pedidos.filter((p)=>{
        return p.estado == 'pagado';
@@ -89,9 +91,15 @@ export class AdminPedidosMozoPage implements OnInit {
         else {
           listaModificada.push(this.pedidosPendientes[i]);
         }
-
       }
+      debugger;
       this.pedidosPendientes = listaModificada;
+      if(pedido.bebidas.platos.length>0){
+        this.fcmService.sendNotificationBar(pedido.mesa.nombre);
+      }
+      if(pedido.comidas.platos.length>0){
+        this.fcmService.sendNotificationCocina(pedido.mesa.nombre);
+      }
       this.loaderService.hideLoader();
       this.presentToast("Pedido confirmado correctamente.");
     }).catch((e) => {
