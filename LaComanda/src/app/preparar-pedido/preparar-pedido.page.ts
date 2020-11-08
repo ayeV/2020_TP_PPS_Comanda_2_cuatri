@@ -144,7 +144,9 @@ export class PrepararPedidoPage implements OnInit {
       }
       if(estaListo){
         this.pedidosService.updateEstado(id, 'listo').then(()=>{
-          this.fcmService.sendNotificationPedidoListo(pedido.mesa.nombre);
+          this.fcmService.sendNotificationPedidoListo(pedido.mesa.nombre).subscribe(()=>{
+            
+          });
           this.loaderService.hideLoader();
         });
       }else{
