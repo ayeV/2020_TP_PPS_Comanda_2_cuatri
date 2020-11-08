@@ -119,7 +119,14 @@ export class HomePage {
         this.login.setValue({
           correo: "metre@mail.com",
           clave: "123456"
-        })
+        });
+        break;
+      case 'bartender':
+        this.login.setValue({
+          correo: "bartender@mail.com",
+          clave: "123456"
+        });
+        break;
       default:
         break;
     }

@@ -54,6 +54,10 @@ const routes: Routes = [
     path: 'lista-espera',
     loadChildren: () => import('./lista-espera/lista-espera.module').then( m => m.ListaEsperaPageModule)
   },
+  {
+    path: 'preparar-pedido',
+    loadChildren: () => import('./preparar-pedido/preparar-pedido.module').then( m => m.PrepararPedidoPageModule)
+  },
 
 ];
 
