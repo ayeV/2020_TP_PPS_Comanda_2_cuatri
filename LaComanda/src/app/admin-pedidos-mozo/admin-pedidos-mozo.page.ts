@@ -95,10 +95,14 @@ export class AdminPedidosMozoPage implements OnInit {
       debugger;
       this.pedidosPendientes = listaModificada;
       if(pedido.bebidas.platos.length>0){
-        this.fcmService.sendNotificationBar(pedido.mesa.nombre);
+        this.fcmService.sendNotificationBar(pedido.mesa.nombre).subscribe(()=>{
+
+        });;
       }
       if(pedido.comidas.platos.length>0){
-        this.fcmService.sendNotificationCocina(pedido.mesa.nombre);
+        this.fcmService.sendNotificationCocina(pedido.mesa.nombre).subscribe(()=>{
+          
+        });
       }
       this.loaderService.hideLoader();
       this.presentToast("Pedido confirmado correctamente.");

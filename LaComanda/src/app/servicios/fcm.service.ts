@@ -72,8 +72,8 @@ export class FcmService {
     let header = {"Authorization": `key=${this.key}`};
     return this.http.post(this.url, {
       "notification": {
-        title: mesa,
-        body: mensaje
+        "title": mesa,
+        "body": mensaje
       },
       "to": "/topics/consulta"
     },{headers: header})
@@ -81,10 +81,11 @@ export class FcmService {
 
   sendNotificationCocina(mesa: string){
     let header = {"Authorization": `key=${this.key}`};
+    let body = "Ha recibido un pedido para la mesa " + mesa;
     return this.http.post(this.url, {
       "notification": {
-        title: mesa,
-        body: `Ha recibido un pedido para la mesa ${mesa}`
+        "title": mesa,
+        "body": body
       },
       "to": "/topics/cocina"
     },{headers: header})
@@ -92,10 +93,11 @@ export class FcmService {
 
   sendNotificationBar(mesa: string){
     let header = {"Authorization": `key=${this.key}`};
+    let body = "Ha recibido un pedido para la mesa " + mesa;
     return this.http.post(this.url, {
       "notification": {
-        title: mesa,
-        body: `Ha recibido un pedido para la mesa ${mesa}`
+        "title": mesa,
+        "body": body
       },
       "to": "/topics/bar"
     },{headers: header})
@@ -103,10 +105,11 @@ export class FcmService {
 
   sendNotificationPedidoListo(mesa){
     let header = {"Authorization": `key=${this.key}`};
+    let body = "El pedido está listo para entregar";
     return this.http.post(this.url, {
       "notification": {
-        title: mesa,
-        body: `El pedido para la ${mesa} está listo para entregar`
+        "title": mesa,
+        "body": body
       },
       "to": "/topics/consulta"
     },{headers: header})
