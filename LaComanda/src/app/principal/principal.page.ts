@@ -37,6 +37,7 @@ export class PrincipalPage implements OnInit {
   public estaEnLista;
   public estadoLista;
   public mesa;
+  public pedido = null;
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -61,6 +62,7 @@ export class PrincipalPage implements OnInit {
 
   ngOnInit() {
     this.info = this.authService.infoUsuario();
+    this.getPedido();
     if (this.info.perfil == 'cliente') {
       this.listaEsperaService.obtenerPersonaEnLista(this.authService.userData.uid).subscribe((response) => {
         if (response.data()) {
@@ -88,10 +90,10 @@ export class PrincipalPage implements OnInit {
             FCMPlugin.subscribeTo({ topic: 'listaEspera' });
           }
           if (this.info.perfil == 'empleado' && this.info.tipo == 'cocinero') {
-            FCMPlugin.subscribeTo({ topic: 'cocina'});
+            FCMPlugin.subscribeTo({ topic: 'cocina' });
           }
-          if(this.info.perfil == 'empleado' && this.info.tipo == 'bartender'){
-            FCMPlugin.subscribeTo({ topic: 'bar'});
+          if (this.info.perfil == 'empleado' && this.info.tipo == 'bartender') {
+            FCMPlugin.subscribeTo({ topic: 'bar' });
           }
         });
       }
@@ -139,8 +141,13 @@ export class PrincipalPage implements OnInit {
         this.mesaService.obtenerMesa(idMesa).subscribe((response) => {
           if (response.data()) {
             if (response.data().estado == 'ocupada') {
-              if (response.data().cliente == this.authService.userData.uid) {
-                this.presentActionSheetAccionesMesa(idMesa);
+              if (response.data().cliente == this.authService.userData.uid && this.pedido != null) {
+                if (this.pedido[0].estado == 'recibido') {
+                  this.presentActionSheePedirCuenta();
+                }
+                else{
+                  this.presentActionSheetAccionesMesa(idMesa);
+                }
               } else {
                 this.presentToast('La mesa se encuentra ocupada');
               }
@@ -148,7 +155,8 @@ export class PrincipalPage implements OnInit {
             else {
               if (this.estadoLista == 'conMesa') {
                 this.presentToast('No puede solicitar otra mesa.')
-              } else {
+              }
+              else {
                 this.presentActionSheetSolicitarMesa(idMesa);
               }
             }
@@ -171,12 +179,20 @@ export class PrincipalPage implements OnInit {
       buttons: [{
         text: 'Ver estado del pedido',
         handler: () => {
-
+          this.presentToast("Estado del pedido: " + this.pedido[0].estado);
         }
-      }, {
-        text: 'Consulta al mozo',
-        handler: () => {
+      }]
+    })
+    await actionSheet.present();
+  }
 
+  async presentActionSheePedirCuenta() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Acciones',
+      buttons: [{
+        text: 'Solicitar cuenta',
+        handler: () => {
+          this.router.navigate(['/pagar-pedido']);
         }
       }]
     })
@@ -222,6 +238,43 @@ export class PrincipalPage implements OnInit {
     }).catch(err => {
       console.log('Error', err);
     });
+  }
+
+  getPedido() {
+    this.loaderService.showLoader();
+    let pedidos = []
+    this.pedidosService.getPedidos().subscribe(x => {
+      x.forEach(item => {
+        pedidos.push({
+          mesa: item.data().mesa,
+          estado: item.data().estado,
+          id: item.id,
+          comidas: item.data().comidas,
+          bebidas: item.data().bebidas,
+          cliente: item.data().cliente,
+          importeTotal: item.data().importeTotal
+        });
+      });
+      this.pedido = pedidos.filter((p) => {
+        return p.cliente.uid == this.authService.userData.uid;
+      });
+      console.log(this.pedido);
+      this.loaderService.hideLoader();
+    });
+
+  }
+
+  confirmarRecepcion() {
+    if (this.pedido[0] != null) {
+      this.pedido[0].estado = 'recibido';
+      this.pedidosService.updateEstado(this.pedido[0].id, this.pedido[0].estado).then((x) => {
+        this.loaderService.hideLoader();
+        this.presentToast("Pedido recibido correctamente.");
+      }).catch((e) => {
+        this.loaderService.hideLoader();
+        this.presentToast("Ha ocurrido un error, intente nuevamente mas tarde.");
+      });
+    }
   }
 
 

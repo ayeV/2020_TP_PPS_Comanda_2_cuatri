@@ -19,40 +19,47 @@
     </ion-content>
   </ion-menu>
   <div id="main" *ngIf="info.perfil =='supervisor'">
-    <ion-button color="primary" [routerLink]="['/alta-supervisor']" routerLinkActive="router-link-active" color="primary" expand="block" >
+    <ion-button color="primary" [routerLink]="['/alta-supervisor']" routerLinkActive="router-link-active"
+      color="primary" expand="block">
       Dar de alta supervisor
     </ion-button>
-    <ion-button color="primary" [routerLink]="['/alta-empleado']" routerLinkActive="router-link-active" color="primary" expand="block" >
+    <ion-button color="primary" [routerLink]="['/alta-empleado']" routerLinkActive="router-link-active" color="primary"
+      expand="block">
       Dar de alta empleado
     </ion-button>
-    <ion-button color="primary" [routerLink]="['/admin-usuarios']" routerLinkActive="router-link-active" color="primary" expand="block" >
+    <ion-button color="primary" [routerLink]="['/admin-usuarios']" routerLinkActive="router-link-active" color="primary"
+      expand="block">
       Administrar clientes
     </ion-button>
     <div class="clase">
-      <img  class="logo" src="./../../assets//images/my_icon.png">
+      <img class="logo" src="assets/images/my_icon.png">
     </div>
   </div>
   <div id="main" *ngIf="info.perfil =='empleado' && info.tipo == 'mozo'">
-    <ion-button color="primary" [routerLink]="['/admin-pedidos-mozo']" routerLinkActive="router-link-active" color="primary" expand="block" >
+    <ion-button color="primary" [routerLink]="['/admin-pedidos-mozo']" routerLinkActive="router-link-active"
+      color="primary" expand="block">
       Confirmar pedidos
     </ion-button>
-    <ion-button color="primary" [routerLink]="['/alta-cliente']" routerLinkActive="router-link-active" color="primary" expand="block" >
+    <ion-button color="primary" [routerLink]="['/alta-cliente']" routerLinkActive="router-link-active" color="primary"
+      expand="block">
       Dar de alta cliente
     </ion-button>
     <div class="clase">
-      <img  class="logo" src="./../../assets//images/my_icon.png">
+      <img class="logo" src="assets/images/my_icon.png">
     </div>
   </div>
   <div id="main" *ngIf="info.perfil =='empleado' && (info.tipo == 'bartender' || info.tipo == 'cocinero')">
-    <ion-button color="primary" [routerLink]="['/preparar-pedido']" routerLinkActive="router-link-active" color="primary" expand="block" >
+    <ion-button color="primary" [routerLink]="['/preparar-pedido']" routerLinkActive="router-link-active"
+      color="primary" expand="block">
       Preparar pedidos
     </ion-button>
     <div class="clase">
-      <img  class="logo" src="./../../assets//images/my_icon.png">
+      <img class="logo" src="assets/images/my_icon.png">
     </div>
   </div>
   <div id="main" *ngIf="info.perfil =='empleado' && info.tipo == 'metre'">
-    <ion-button color="primary" [routerLink]="['/lista-espera']" routerLinkActive="router-link-active" color="primary" expand="block" >
+    <ion-button color="primary" [routerLink]="['/lista-espera']" routerLinkActive="router-link-active" color="primary"
+      expand="block">
       Ver lista de espera
     </ion-button>
   </div>
@@ -64,7 +71,7 @@
           Por favor, escanee el código QR para poder ingresar a la lista de espera.
         </ion-label>
       </ion-item>
-      <ion-button (click)="scanEspera()"  color="primary" expand="block" >
+      <ion-button (click)="scanEspera()" color="primary" expand="block">
         <ion-icon slot="start" name="qr-code-outline"></ion-icon>
         Ingresar a lista de espera
       </ion-button>
@@ -76,22 +83,27 @@
           Espere las indicaciones del Metre para ser asignado a la mesa. Cuando se le indique escanee el código QR.
         </ion-label>
       </ion-item>
-      <ion-button (click)="scanMesa()"  color="primary" expand="block" >
+      <ion-button (click)="scanMesa()" color="primary" expand="block">
         <ion-icon slot="start" name="qr-code-outline"></ion-icon>
         Leer Código QR Mesa
       </ion-button>
     </div>
     <div *ngIf="estaEnLista && estadoLista == 'conMesa'">
-      <ion-button color="primary" [routerLink]="['/alta-pedido']" routerLinkActive="router-link-active" color="primary" expand="block" >
+      <ion-button *ngIf="pedido == null" color="primary" [routerLink]="['/alta-pedido']"
+        routerLinkActive="router-link-active" color="primary" expand="block">
         Realizar pedido
       </ion-button>
-      <ion-button (click)="scanMesa()"  color="primary" expand="block" >
+      <ion-button (click)="scanMesa()" color="primary" expand="block">
         <ion-icon slot="start" name="qr-code-outline"></ion-icon>
         Leer Código QR Mesa
       </ion-button>
-      <ion-button [routerLink]="['/consulta']" routerLinkActive="router-link-active"   color="primary" expand="block" >
-        <ion-icon  slot="start" name="hand-left-outline"></ion-icon>
+      <ion-button [routerLink]="['/consulta']" routerLinkActive="router-link-active" color="primary" expand="block">
+        <ion-icon slot="start" name="hand-left-outline"></ion-icon>
         Consulta al mozo
+      </ion-button>
+      <ion-button *ngIf="pedido && pedido[0].estado == 'listo'" color="primary" expand="block" (click)="confirmarRecepcion()">
+        <ion-icon slot="start" name="hand-left-outline"></ion-icon>
+        Confirmar recepción del pedido
       </ion-button>
     </div>
 

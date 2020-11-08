@@ -14,6 +14,7 @@ export class AdminPedidosMozoPage implements OnInit {
 
   public pedidosPendientes = [];
   public pedidosPagados=[];
+  public pedidosListos = [];
   constructor( private UsuarioService: UsuarioService,
     private loaderService: LoaderService,
     public toastController: ToastController,
@@ -68,6 +69,9 @@ export class AdminPedidosMozoPage implements OnInit {
       this.pedidosPagados = pedidos.filter((p)=>{
        return p.estado == 'pagado';
       });
+      this.pedidosListos = pedidos.filter((p)=>{
+        return p.estado == 'listo';
+       });
       this.loaderService.hideLoader();
     });
   }

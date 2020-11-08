@@ -21,6 +21,15 @@
     </ion-item>
   </ion-list>
   <ion-list>
+    <ion-label>Pedidos listos para servir</ion-label>
+    <ion-item *ngFor="let pedido of pedidosListos">
+      <ion-label class="capitalize">{{pedido.mesa.nombre}}</ion-label>
+      <ion-button color="primary" (click)="presentModal(pedido)">
+        <ion-icon name="eye-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-list>
     <ion-label>Pedidos pagados</ion-label>
     <ion-item *ngFor="let pedido of pedidosPagados">
       <ion-label class="capitalize">{{pedido.mesa.nombre}}</ion-label>

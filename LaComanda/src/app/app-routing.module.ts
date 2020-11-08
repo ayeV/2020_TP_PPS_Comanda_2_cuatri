@@ -58,6 +58,10 @@ const routes: Routes = [
     path: 'preparar-pedido',
     loadChildren: () => import('./preparar-pedido/preparar-pedido.module').then( m => m.PrepararPedidoPageModule)
   },
+  {
+    path: 'pagar-pedido',
+    loadChildren: () => import('./pagar-pedido/pagar-pedido.module').then( m => m.PagarPedidoPageModule)
+  },
 
 ];
 
