@@ -100,4 +100,15 @@ export class FcmService {
       "to": "/topics/bar"
     },{headers: header})
   }
+
+  sendNotificationPedidoListo(mesa){
+    let header = {"Authorization": `key=${this.key}`};
+    return this.http.post(this.url, {
+      "notification": {
+        title: mesa,
+        body: `El pedido para la ${mesa} está listo para entregar`
+      },
+      "to": "/topics/consulta"
+    },{headers: header})
+  }
 }

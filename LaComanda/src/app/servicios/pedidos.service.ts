@@ -12,35 +12,52 @@ export class PedidosService {
   constructor(private db: AngularFirestore) { }
 
 
-  calcularImportes()
-  {
-    this.platosPedidos.forEach((c)=>{
+  calcularImportes() {
+    this.platosPedidos.forEach((c) => {
       c.importe = c.importe * c.cantidad;
     });
   }
 
-  guardarPedido(pedido:any)
-  {
+  guardarPedido(pedido: any) {
     return this.db.collection("pedidos").add({
       estado: pedido.estado,
-      comidas:pedido.comidas,
-      bebidas:pedido.bebidas,
-      importeTotal:pedido.importeTotal,
-      mesa:pedido.mesa,
-      cliente:pedido.cliente
+      comidas: pedido.comidas,
+      bebidas: pedido.bebidas,
+      importeTotal: pedido.importeTotal,
+      mesa: pedido.mesa,
+      cliente: pedido.cliente
     });
 
   }
 
-  getPedidos()
-  {
+  getPedidos() {
     return this.db.collection('pedidos').get();
   }
 
-  updateEstado(id,estado) {
+  getPedido(id){
+    return this.db.collection('pedidos').doc(id).get();
+  }
+
+  updateEstado(id, estado) {
     return this.db.collection('pedidos').doc(id).set({
       estado: estado,
-    },{merge: true});
+    }, { merge: true });
+  }
+
+  updateEstadoComida(id, estado) {
+    return this.db.collection('pedidos').doc(id).set({
+      comidas: {
+        estado: estado
+      }
+    }, { merge: true });
+  }
+
+  updateEstadoBebidas(id, estado) {
+    return this.db.collection('pedidos').doc(id).set({
+      bebidas: {
+        estado: estado
+      }
+    }, { merge: true });
   }
 
 }

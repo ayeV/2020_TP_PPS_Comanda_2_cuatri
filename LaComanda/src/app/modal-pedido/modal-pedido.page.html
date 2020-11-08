@@ -10,16 +10,21 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-item *ngFor="let comida of comidas.platos">
+  <ion-list *ngIf="comidas">
+    <ion-item  *ngFor="let comida of comidas.platos">
       <ion-label class="capitalize">{{comida.nombre}}</ion-label>
+      <ion-label class="capitalize">x{{comida.cantidad}}</ion-label>
     </ion-item>
-    <ion-item *ngFor="let bebida of bebidas.platos">
+  </ion-list>
+  <ion-list *ngIf="bebidas">
+    <ion-item  *ngFor="let bebida of bebidas.platos">
       <ion-label class="capitalize">{{bebida.nombre}}</ion-label>
+      <ion-label class="capitalize">x{{bebida.cantidad}}</ion-label>
     </ion-item>
-    <ion-item>
+  </ion-list>
+  <ion-list *ngIf="importeTotal">
+    <ion-item >
       <ion-label class="capitalize">Total: {{importeTotal}}</ion-label>
     </ion-item>
   </ion-list>
-
 </ion-content>
