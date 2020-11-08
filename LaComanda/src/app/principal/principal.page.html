@@ -12,29 +12,37 @@
   <ion-menu side="start" contentId="main">
     <ion-content>
       <ion-list>
-        <ion-item (click)="irA('alta-supervisor')" *ngIf="info.perfil=='supervisor'">
-          <ion-label>Dar de alta supervisor</ion-label>
-        </ion-item>
-        <ion-item (click)="irA('alta-empleado')" *ngIf="info.perfil=='supervisor'">
-          <ion-label>Dar de alta empleado</ion-label>
-        </ion-item>
-        <ion-item (click)="irA('alta-cliente')" *ngIf="info.tipo == 'mozo'">
-          <ion-label>Dar de alta cliente</ion-label>
-        </ion-item>
-        <ion-item (click)="irA('admin-pedidos-mozo')" *ngIf="info.tipo == 'mozo'">
-          <ion-label>Confirmar pedidos</ion-label>
-        </ion-item>
-        <ion-item (click)="irA('admin-usuarios')" *ngIf="info.perfil == 'supervisor'">
-          <ion-label>Administrar clientes</ion-label>
-        </ion-item>
         <ion-item (click)="salir()">
           <ion-label>Salir</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
-  <div id="main" *ngIf="info.perfil =='supervisor'"></div>
-  <div id="main" *ngIf="info.perfil =='empleado' && info.tipo == 'mozo'"></div>
+  <div id="main" *ngIf="info.perfil =='supervisor'">
+    <ion-button color="primary" [routerLink]="['/alta-supervisor']" routerLinkActive="router-link-active" color="primary" expand="block" >
+      Dar de alta supervisor
+    </ion-button>
+    <ion-button color="primary" [routerLink]="['/alta-empleado']" routerLinkActive="router-link-active" color="primary" expand="block" >
+      Dar de alta empleado
+    </ion-button>
+    <ion-button color="primary" [routerLink]="['/admin-usuarios']" routerLinkActive="router-link-active" color="primary" expand="block" >
+      Administrar clientes
+    </ion-button>
+    <div class="clase">
+      <img  class="logo" src="./../../assets//images/my_icon.png">
+    </div>
+  </div>
+  <div id="main" *ngIf="info.perfil =='empleado' && info.tipo == 'mozo'">
+    <ion-button color="primary" [routerLink]="['/admin-pedidos-mozo']" routerLinkActive="router-link-active" color="primary" expand="block" >
+      Confirmar pedidos
+    </ion-button>
+    <ion-button color="primary" [routerLink]="['/alta-cliente']" routerLinkActive="router-link-active" color="primary" expand="block" >
+      Dar de alta cliente
+    </ion-button>
+    <div class="clase">
+      <img  class="logo" src="./../../assets//images/my_icon.png">
+    </div>
+  </div>
   <div id="main" *ngIf="info.perfil =='empleado' && (info.tipo == 'bartender' || info.tipo == 'cocinero')"></div>
   <div id="main" *ngIf="info.perfil =='empleado' && info.tipo == 'metre'">
     <ion-button color="primary" [routerLink]="['/lista-espera']" routerLinkActive="router-link-active" color="primary" expand="block" >

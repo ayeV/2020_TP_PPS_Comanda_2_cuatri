@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Confirmar pedidos</ion-title>
-    <ion-buttons slot="start" color = "secondary">
+    <ion-title>Administrar pedidos</ion-title>
+    <ion-buttons slot="start" color="secondary">
       <ion-back-button></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
@@ -9,9 +9,22 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let pedido of pedidos">
+    <ion-label>Pedidos pendientes</ion-label>
+    <ion-item *ngFor="let pedido of pedidosPendientes">
       <ion-label class="capitalize">{{pedido.mesa.nombre}}</ion-label>
       <ion-button color="primary" (click)="confirmarPedido(pedido)" *ngIf="pedido.estado=='pendiente'">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="primary" (click)="presentModal(pedido)">
+        <ion-icon name="eye-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-label>Pedidos pagados</ion-label>
+    <ion-item *ngFor="let pedido of pedidosPagados">
+      <ion-label class="capitalize">{{pedido.mesa.nombre}}</ion-label>
+      <ion-button color="primary" (click)="cerrarPedido(pedido)" *ngIf="pedido.estado=='pagado'">
         <ion-icon name="checkmark-circle-outline"></ion-icon>
       </ion-button>
       <ion-button color="primary" (click)="presentModal(pedido)">

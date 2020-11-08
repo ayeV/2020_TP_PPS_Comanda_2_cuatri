@@ -12,7 +12,8 @@ import { UsuarioService } from '../servicios/usuario.service';
 })
 export class AdminPedidosMozoPage implements OnInit {
 
-  public pedidos = [];
+  public pedidosPendientes = [];
+  public pedidosPagados=[];
   constructor( private UsuarioService: UsuarioService,
     private loaderService: LoaderService,
     public toastController: ToastController,
@@ -61,7 +62,12 @@ export class AdminPedidosMozoPage implements OnInit {
           importeTotal:item.data().importeTotal
         });
       });
-      this.pedidos = pedidos;
+      this.pedidosPendientes = pedidos.filter((p)=>{
+        return p.estadp == 'pendiente';
+      });
+      this.pedidosPagados = pedidos.filter((p)=>{
+       return p.estado == 'pagado';
+      });
       this.loaderService.hideLoader();
     });
   }
@@ -72,18 +78,43 @@ export class AdminPedidosMozoPage implements OnInit {
     pedido.estado = 'confirmado';
     this.pedidosService.updateEstado(pedido.id,pedido.estado).then((x) => {
       let listaModificada = [];
-      for (let i = 0; i < this.pedidos.length; i++) {
-        if (pedido.id == this.pedidos[i].id) {
+      for (let i = 0; i < this.pedidosPendientes.length; i++) {
+        if (pedido.id == this.pedidosPendientes[i].id) {
           listaModificada.push(pedido);
         }
         else {
-          listaModificada.push(this.pedidos[i]);
+          listaModificada.push(this.pedidosPendientes[i]);
         }
 
       }
-      this.pedidos = listaModificada;
+      this.pedidosPendientes = listaModificada;
       this.loaderService.hideLoader();
       this.presentToast("Pedido confirmado correctamente.");
+    }).catch((e) => {
+      this.loaderService.hideLoader();
+      this.presentToast("Ha ocurrido un error, intente nuevamente mas tarde.");
+    });
+  }
+
+  
+  cerrarPedido(pedido)
+  {
+    this.loaderService.showLoader();
+    pedido.estado = 'cerrado';
+    this.pedidosService.updateEstado(pedido.id,pedido.estado).then((x) => {
+      let listaModificada = [];
+      for (let i = 0; i < this.pedidosPagados.length; i++) {
+        if (pedido.id == this.pedidosPagados[i].id) {
+          listaModificada.push(pedido);
+        }
+        else {
+          listaModificada.push(this.pedidosPagados[i]);
+        }
+
+      }
+      this.pedidosPagados = listaModificada;
+      this.loaderService.hideLoader();
+      this.presentToast("Pedido cerrado correctamente.");
     }).catch((e) => {
       this.loaderService.hideLoader();
       this.presentToast("Ha ocurrido un error, intente nuevamente mas tarde.");
