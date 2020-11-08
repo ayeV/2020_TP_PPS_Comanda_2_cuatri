@@ -43,7 +43,14 @@
       <img  class="logo" src="./../../assets//images/my_icon.png">
     </div>
   </div>
-  <div id="main" *ngIf="info.perfil =='empleado' && (info.tipo == 'bartender' || info.tipo == 'cocinero')"></div>
+  <div id="main" *ngIf="info.perfil =='empleado' && (info.tipo == 'bartender' || info.tipo == 'cocinero')">
+    <ion-button color="primary" [routerLink]="['/preparar-pedido']" routerLinkActive="router-link-active" color="primary" expand="block" >
+      Preparar pedidos
+    </ion-button>
+    <div class="clase">
+      <img  class="logo" src="./../../assets//images/my_icon.png">
+    </div>
+  </div>
   <div id="main" *ngIf="info.perfil =='empleado' && info.tipo == 'metre'">
     <ion-button color="primary" [routerLink]="['/lista-espera']" routerLinkActive="router-link-active" color="primary" expand="block" >
       Ver lista de espera
