@@ -24,4 +24,11 @@ export class MesaService {
       cliente: uid
     });
   }
+
+  liberarMesa(idMesa){
+    return this.db.collection('mesas').doc(idMesa).update({
+      estado: 'libre',
+      cliente: null
+    });
+  }
 }

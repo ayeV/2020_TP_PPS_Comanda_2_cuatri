@@ -193,8 +193,14 @@ export class PrincipalPage implements OnInit {
         text: 'Solicitar cuenta',
         handler: () => {
           this.router.navigate(['/pagar-pedido']);
+        }},
+        {
+          text: 'Ver estado del pedido',
+          handler: () => {
+            this.presentToast("Estado del pedido: " + this.pedido[0].estado);
+          }
         }
-      }]
+      ]
     })
     await actionSheet.present();
   }

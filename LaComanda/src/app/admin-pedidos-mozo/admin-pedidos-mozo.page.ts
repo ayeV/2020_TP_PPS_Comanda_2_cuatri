@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { ModalPedidoPage } from '../modal-pedido/modal-pedido.page';
 import { FcmService } from '../servicios/fcm.service';
+import { ListaEsperaService } from '../servicios/lista-espera.service';
 import { LoaderService } from '../servicios/loader.service';
+import { MesaService } from '../servicios/mesa.service';
 import { PedidosService } from '../servicios/pedidos.service';
 import { UsuarioService } from '../servicios/usuario.service';
 
@@ -21,7 +23,9 @@ export class AdminPedidosMozoPage implements OnInit {
     public toastController: ToastController,
     private pedidosService:PedidosService,
     public modalController: ModalController,
-    private fcmService: FcmService) { }
+    private fcmService: FcmService,
+    public mesaService:MesaService,
+    public listaEsperaService:ListaEsperaService) { }
 
   ngOnInit() {
     this.getPedidos();
@@ -92,7 +96,6 @@ export class AdminPedidosMozoPage implements OnInit {
           listaModificada.push(this.pedidosPendientes[i]);
         }
       }
-      debugger;
       this.pedidosPendientes = listaModificada;
       if(pedido.bebidas.platos.length>0){
         this.fcmService.sendNotificationBar(pedido.mesa.nombre).subscribe(()=>{
@@ -126,11 +129,14 @@ export class AdminPedidosMozoPage implements OnInit {
         else {
           listaModificada.push(this.pedidosPagados[i]);
         }
-
+        this.mesaService.liberarMesa(pedido.mesa.id).then((a)=>{
+            this.listaEsperaService.borrarDeLista(pedido.cliente.uid).then((x)=>{
+              this.pedidosPagados = listaModificada;
+              this.loaderService.hideLoader();
+              this.presentToast("Pedido cerrado correctamente.");
+            });
+        });
       }
-      this.pedidosPagados = listaModificada;
-      this.loaderService.hideLoader();
-      this.presentToast("Pedido cerrado correctamente.");
     }).catch((e) => {
       this.loaderService.hideLoader();
       this.presentToast("Ha ocurrido un error, intente nuevamente mas tarde.");

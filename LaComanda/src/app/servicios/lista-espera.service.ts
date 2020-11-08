@@ -35,4 +35,6 @@ export class ListaEsperaService {
   borrarDeLista(uid){
     return this.db.collection('listaEspera').doc(uid).delete();
   }
+
+  
 }
