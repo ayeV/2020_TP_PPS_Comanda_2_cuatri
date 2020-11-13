@@ -231,7 +231,9 @@ export class PrincipalPage implements OnInit {
       let codigo = JSON.parse(barcodeData['text']);
       if (codigo && codigo.tipo && codigo.tipo == 'listaEspera') {
         this.listaEsperaService.agregarALista(this.authService.userData.uid).then((response) => {
-          this.fcmService.sendNotificationWaitList();
+          this.fcmService.sendNotificationWaitList().subscribe(()=>{
+            
+          });
           this.presentToast("Agregado a la lista de espera. Por favor espere las indicaciones.");
           this.estaEnLista = true;
           this.estadoLista = 'espera';
