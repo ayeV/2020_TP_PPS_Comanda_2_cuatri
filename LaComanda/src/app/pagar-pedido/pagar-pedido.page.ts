@@ -91,7 +91,6 @@ export class PagarPedidoPage implements OnInit {
           this.propina = this.pedido[0].importeTotal * (15/100);
           this.pedido[0].importeTotal = this.pedido[0].importeTotal + this.pedido[0].importeTotal * (15/100);
         }
-        this.router.navigate(['/principal']);
       }
       else {
         this.presentToast("Código incorrecto. Por favor lea un código QR de propina.")
