@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActionSheetController, ToastController } from '@ionic/angular';
+import { Vibration } from '@ionic-native/vibration/ngx';
 import { AuthService } from '../servicios/auth.service';
 import { LoaderService } from '../servicios/loader.service';
 import { MenuService } from '../servicios/menu.service';
@@ -18,6 +19,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { ListaEsperaService } from '../servicios/lista-espera.service';
 import { MesaService } from '../servicios/mesa.service';
 import { FCM } from '@capacitor-community/fcm';
+import { SoundService } from '../servicios/sound.service';
 
 const { PushNotifications } = Plugins;
 const { FCMPlugin } = Plugins;
@@ -50,7 +52,9 @@ export class PrincipalPage implements OnInit {
     public pedidosService: PedidosService,
     private listaEsperaService: ListaEsperaService,
     public actionSheetController: ActionSheetController,
-    private mesaService: MesaService) { }
+    private mesaService: MesaService,
+    private vibration: Vibration,
+    private soundService: SoundService) { }
 
   async presentToast(message) {
     const toast = await this.toastController.create({
@@ -58,6 +62,14 @@ export class PrincipalPage implements OnInit {
       duration: 8000
     });
     toast.present();
+  }
+
+  ionViewWillEnter() {
+    this.soundService.preload('logout', "assets/audio/logout.wav");
+  }
+
+  ionViewWillLeave() {
+    this.soundService.unload('logout');
   }
 
   ngOnInit() {
@@ -122,6 +134,7 @@ export class PrincipalPage implements OnInit {
 
   salir() {
     this.authService.SignOut().then(() => {
+      this.soundService.play('logout');
       FCMPlugin.unsubscribeFrom({ topic: 'registro' });
       FCMPlugin.unsubscribeFrom({ topic: 'consulta' });
       FCMPlugin.unsubscribeFrom({ topic: 'listaEspera' });
@@ -150,11 +163,13 @@ export class PrincipalPage implements OnInit {
                 }
               } else {
                 this.presentToast('La mesa se encuentra ocupada');
+                this.vibration.vibrate(1000);
               }
             }
             else {
               if (this.estadoLista == 'conMesa') {
-                this.presentToast('No puede solicitar otra mesa.')
+                this.presentToast('No puede solicitar otra mesa.');
+                this.vibration.vibrate(1000);
               }
               else {
                 this.presentActionSheetSolicitarMesa(idMesa);
@@ -241,6 +256,7 @@ export class PrincipalPage implements OnInit {
       }
       else {
         this.presentToast("Código incorrecto. Por favor lea un código QR de lista de espera");
+        this.vibration.vibrate(1000);
       }
 
     }).catch(err => {

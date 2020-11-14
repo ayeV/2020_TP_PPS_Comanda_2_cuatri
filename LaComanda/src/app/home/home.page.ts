@@ -5,6 +5,7 @@ import { ActionSheetController, ToastController } from '@ionic/angular';
 import { AuthService } from '../servicios/auth.service';
 import { ErrorService } from '../servicios/error.service';
 import { LoaderService } from '../servicios/loader.service';
+import { SoundService } from '../servicios/sound.service';
 import { UsuarioService } from '../servicios/usuario.service';
 
 @Component({
@@ -25,7 +26,8 @@ export class HomePage {
     private formBuilder: FormBuilder,
     public actionSheetController: ActionSheetController,
     private usuarioService: UsuarioService,
-    private loaderService: LoaderService) {
+    private loaderService: LoaderService,
+    private soundService: SoundService) {
     this.login = this.formBuilder.group({
       correo: ['', [Validators.required, Validators.email]],
       clave: ['', [Validators.required, Validators.minLength(6)]]
@@ -38,7 +40,12 @@ export class HomePage {
     this.login.setValue({
       correo: '',
       clave: ''
-    })
+    });
+    this.soundService.preload('login', "assets/audio/login.wav");
+  }
+
+  ionViewWillLeave() {
+    this.soundService.unload('login');
   }
 
   logForm() {
@@ -52,6 +59,7 @@ export class HomePage {
               this.presentToast("Debes ser aceptado por el supervisor para poder iniciar sesión.");
             }
             else {
+              this.soundService.play('login');
               this.authService.setUserInfo(response.data());
               this.loaderService.hideLoader();
               this.router.navigate(['principal']);
