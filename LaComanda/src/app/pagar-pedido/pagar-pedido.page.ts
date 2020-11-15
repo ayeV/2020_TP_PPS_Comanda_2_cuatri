@@ -68,6 +68,7 @@ export class PagarPedidoPage implements OnInit {
       this.pedidosService.updateEstado(this.pedido[0].id, this.pedido[0].estado).then((x) => {
         this.loaderService.hideLoader();
         this.presentToast("Pedido pagado correctamente.");
+        this.router.navigate(['principal'])
       }).catch((e) => {
         this.loaderService.hideLoader();
         this.presentToast("Ha ocurrido un error, intente nuevamente mas tarde.");
